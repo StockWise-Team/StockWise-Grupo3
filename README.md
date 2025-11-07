@@ -1,4 +1,4 @@
-# 🧾 StockWise
+# 🗃️ StockWise
 
 StockWise es una aplicación diseñada para pequeños y medianos comercios que buscan llevar un control eficiente de su inventario, ventas diarias, cierres de caja y gestión de empleados.
 Su objetivo es ofrecer una solución simple, intuitiva y completa para optimizar las operaciones diarias del negocio.
@@ -18,7 +18,7 @@ Genera reportes diarios o por turno con detalle de ingresos.
 Crea perfiles de usuario con distintos roles y permisos.
 
 
-### 🏗️ Tecnologías utilizadas
+### 🛠️ Tecnologías utilizadas
 Tipo	Tecnología
 - Frontend: Angular
 - Backend:	Node.js con Express
@@ -32,8 +32,7 @@ Clonar el repositorio
 
 git clone https://github.com/StockWise-Team/StockWise-Grupo3.git
 
-## Instalar dependencias
-
+## 🌐 Instalar dependencias
 
 ### Levantar el Back End
 cd StockWiseBack <br>
@@ -55,7 +54,7 @@ PORT_DB =
 ```
 
 
-## Ejecutar el proyecto
+## ▶️ Ejecutar el proyecto
 
 `npm run dev`
 
@@ -81,6 +80,9 @@ Registrar ventas y cierres de caja
 Dashboard con métricas en tiempo real
 
 Aplicación con diseño responsive (Android / iOS)
+
+# 📚 Recursos Utilizados
+https://www.svgrepo.com/collection/solar-bold-icons/
 
 🪪 Licencia
 
