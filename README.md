@@ -67,7 +67,7 @@ Acceder a la app DB
 👉 http://localhost:3001
 
 
-# 🧑‍💼 Roles y permisos
+#🧑‍💼 Roles y permisos
 ### Administrador	
 Acceso total a todas las secciones
 Modificar inventario y precios
