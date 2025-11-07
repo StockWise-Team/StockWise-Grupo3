@@ -8,6 +8,7 @@ exports.getAllProductsRepository = async () => {
     const result = await pool.request().query(getAllProductSQL);
 
     return result.recordset; // Devolver directamente el array sin stringify
+
   } catch (error) {
     console.log("Error en REPOSITORY - getAllProductsRepository - " + error);
     throw Error("Error en REPOSITORY - getAllProductsRepository - " + error);
