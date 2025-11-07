@@ -41,3 +41,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Database configuration files (keep local, don't upload to GitHub)
+.env
+src/database/config.js
