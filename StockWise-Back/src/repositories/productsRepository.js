@@ -3,7 +3,6 @@ const { getAllProductSQL } = require("../database/queries");
 
 exports.getAllProductsRepository = async () => {
   const pool = await getConnectionSQL();
-
   //console.log("pool", pool);
   try {
     const result = await pool.request().query(getAllProductSQL);

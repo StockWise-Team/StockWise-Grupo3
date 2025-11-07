@@ -8,4 +8,5 @@ router.use(express.json())
 
 router.use('/products', productsRouter)
 router.use('/sales', salesRouter)
+
 module.exports = router
