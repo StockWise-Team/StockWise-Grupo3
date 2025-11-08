@@ -1,4 +1,9 @@
-const { getAllProductsService, getProductByIdService, deleteProductService } = require("../services/productsServices");
+const {
+  getAllProductsService,
+  getProductByIdService,
+  deleteProductService,
+  createProductService,
+} = require("../services/productsServices");
 const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
 
 exports.readProducts = async (req, res) => {
@@ -36,7 +41,7 @@ exports.readProductById = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
   try {
     console.log("CONTROLLER - deleteProduct");
-    
+
     const idProduct = req.params.id;
     const product = await deleteProductService(idProduct);
 
@@ -52,6 +57,24 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).send({
       code: 500,
       message: "Error al borrar el producto",
+    });
+    throw Error("Error 500");
+  }
+};
+
+exports.createProduct = async (req, res) => {
+  try {
+    console.log("CONTROLLER - createProduct");
+
+    const product = req.body;
+    const newProduct = await createProductService(product);
+
+    res.setHeader(CONTENT_TYPE, TYPE_JSON);
+    res.status(200).send(JSON.stringify(newProduct));
+  } catch (error) {
+    res.status(500).send({
+      code: 500,
+      message: "Error al crear el producto",
     });
     throw Error("Error 500");
   }

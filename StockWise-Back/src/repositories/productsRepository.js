@@ -3,6 +3,7 @@ const {
   getAllProductSQL,
   getProductByIdSQL,
   deleteProductSQL,
+  createProductSQL,
 } = require("../database/queries");
 const sql = require("mssql");
 
@@ -66,6 +67,30 @@ exports.deleteProductRepository = async (id) => {
   } catch (error) {
     console.log("Error en REPOSITORY - deleteProductRepository - " + error);
     throw Error("Error en REPOSITORY - deleteProductRepository - " + error);
+  } finally {
+    pool.close();
+  }
+};
+
+exports.createProductRepository = async (product) => {
+  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO } = product;
+  const pool = await getConnectionSQL();
+  try {
+    console.log(`REPOSITORY - createProductRepository producto:${product}`);
+
+    await pool
+      .request()
+      .input("NOMBRE", sql.NVarChar, NOMBRE)
+      .input("DESCRIPCION", sql.NVarChar, DESCRIPCION)
+      .input("CATEGORIA", sql.NVarChar, CATEGORIA)
+      .input("PRECIO", sql.Decimal, PRECIO)
+      .input("ACTIVO", sql.Bit, ACTIVO)
+      .query(createProductSQL);
+
+    return product;
+  } catch (error) {
+    console.log("Error en REPOSITORY - createProductRepository - " + error);
+    throw Error("Error en REPOSITORY - createProductRepository - " + error);
   } finally {
     pool.close();
   }
