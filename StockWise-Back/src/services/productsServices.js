@@ -3,6 +3,7 @@ const {
   getProductByIdRepository,
   deleteProductRepository,
   createProductRepository,
+  updateProductRepository,
 } = require("../repositories/productsRepository");
 
 exports.getAllProductsService = async () => {
@@ -41,5 +42,17 @@ exports.createProductService = async (product) => {
   } catch (error) {
     console.log("Error en SERVICE - createProductService" + error);
     throw Error("Error en SERVICE - createProductService" + error);
+  }
+};
+
+exports.updateProductService = async (id, product) => {
+  try {
+    console.log(
+      `SERVICE - updateProductService - producto actualizado: ${id} - ${product}`
+    );
+    return await updateProductRepository(id, product);
+  } catch (error) {
+    console.log("Error en SERVICE - updateProductService" + error);
+    throw Error("Error en SERVICE - updateProductService" + error);
   }
 };

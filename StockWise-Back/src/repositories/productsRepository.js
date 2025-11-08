@@ -4,6 +4,7 @@ const {
   getProductByIdSQL,
   deleteProductSQL,
   createProductSQL,
+  updateProductSQL,
 } = require("../database/queries");
 const sql = require("mssql");
 
@@ -24,13 +25,13 @@ exports.getAllProductsRepository = async () => {
 exports.getProductByIdRepository = async (id) => {
   const pool = await getConnectionSQL();
   try {
-    const productoEncontrado = await pool
+    const foundProduct = await pool
       .request()
       .input("id", sql.Int, id)
       .query(getProductByIdSQL);
     console.log(`REPOSITORY - getProductByIdRepository id:${id}`);
 
-    return productoEncontrado.recordset;
+    return foundProduct.recordset;
   } catch (error) {
     console.log("Error en REPOSITORY - getProductByIdRepository - " + error);
     throw Error("Error en REPOSITORY - getProductByIdRepository - " + error);
@@ -44,25 +45,25 @@ exports.deleteProductRepository = async (id) => {
 
   try {
     console.log(`REPOSITORY - deleteProductRepository - id:${id}`);
-    const productoEncontrado = await pool
+    const foundProduct = await pool
       .request()
       .input("id", sql.Int, id)
       .query(getProductByIdSQL);
 
-    if (productoEncontrado.recordset.length == 0) {
+    if (foundProduct.recordset.length == 0) {
       console.log("Producto no encontrado");
     } else {
-      console.log(productoEncontrado.recordset[0]);
-      const productoBorrado = await pool
+      console.log(foundProduct.recordset[0]);
+      const deletedProduct = await pool
         .request()
         .input("id", sql.Int, id)
         .query(deleteProductSQL);
 
       console.log(
-        `Producto Eliminado - NOMBRE: ${productoEncontrado.recordset[0].NOMBRE}`
+        `Producto Eliminado - NOMBRE: ${foundProduct.recordset[0].NOMBRE}`
       );
 
-      return productoBorrado.rowsAffected[0];
+      return deletedProduct.rowsAffected[0];
     }
   } catch (error) {
     console.log("Error en REPOSITORY - deleteProductRepository - " + error);
@@ -91,6 +92,47 @@ exports.createProductRepository = async (product) => {
   } catch (error) {
     console.log("Error en REPOSITORY - createProductRepository - " + error);
     throw Error("Error en REPOSITORY - createProductRepository - " + error);
+  } finally {
+    pool.close();
+  }
+};
+
+exports.updateProductRepository = async (id, product) => {
+  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO } = product;
+  const pool = await getConnectionSQL();
+  try {
+    console.log(
+      `REPOSITORY - updateProductRepository id: ${id}  producto:${product}`
+    );
+
+    const foundProduct = await pool
+      .request()
+      .input("id", sql.Int, id)
+      .query(getProductByIdSQL);
+
+    if (foundProduct.recordset.length == 0) {
+      console.log("Producto no encontrado");
+    } else {
+      const updatedProduct = await pool
+        .request()
+        .input("id", sql.Int, id)
+        .input("NOMBRE", sql.NVarChar, NOMBRE)
+        .input("DESCRIPCION", sql.NVarChar, DESCRIPCION)
+        .input("CATEGORIA", sql.NVarChar, CATEGORIA)
+        .input("PRECIO", sql.Decimal, PRECIO)
+        .input("ACTIVO", sql.Bit, ACTIVO)
+        .query(updateProductSQL);
+
+      console.log(
+        `Producto Actualizado - NOMBRE: ${foundProduct.recordset[0].NOMBRE}`
+      );
+      console.log(product);
+      
+      return updatedProduct.rowsAffected[0];
+    }
+  } catch (error) {
+    console.log("Error en REPOSITORY - updateProductRepository - " + error);
+    throw Error("Error en REPOSITORY - updateProductRepository - " + error);
   } finally {
     pool.close();
   }

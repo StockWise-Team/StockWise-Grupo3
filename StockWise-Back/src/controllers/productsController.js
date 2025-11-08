@@ -3,6 +3,7 @@ const {
   getProductByIdService,
   deleteProductService,
   createProductService,
+  updateProductService,
 } = require("../services/productsServices");
 const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
 
@@ -75,6 +76,25 @@ exports.createProduct = async (req, res) => {
     res.status(500).send({
       code: 500,
       message: "Error al crear el producto",
+    });
+    throw Error("Error 500");
+  }
+};
+
+exports.updateProduct = async (req, res) => {
+  try {
+    console.log("CONTROLLER - updateProduct");
+
+    const id = req.params.id;
+    const product = req.body;
+    const updatedProduct = await updateProductService(id, product);
+
+    res.setHeader(CONTENT_TYPE, TYPE_JSON);
+    res.status(200).send(JSON.stringify(updatedProduct));
+  } catch (error) {
+    res.status(500).send({
+      code: 500,
+      message: "Error al actualizar el producto",
     });
     throw Error("Error 500");
   }
