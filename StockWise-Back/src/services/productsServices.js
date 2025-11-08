@@ -1,6 +1,7 @@
 const {
   getAllProductsRepository,
   getProductByIdRepository,
+  deleteProductRepository,
 } = require("../repositories/productsRepository");
 
 exports.getAllProductsService = async () => {
@@ -19,5 +20,15 @@ exports.getProductByIdService = async (id) => {
   } catch (error) {
     console.log("Error en SERVICE - getProductByIdService" + error);
     throw Error("Error en SERVICE - getProductByIdService" + error);
+  }
+};
+
+exports.deleteProductService = async (id) => {
+  try {
+    console.log(`SERVICE - deleteProductService - id a borrar: ${id}`);
+    return await deleteProductRepository(id);
+  } catch (error) {
+    console.log("Error en SERVICE - deleteProductService" + error);
+    throw Error("Error en SERVICE - deleteProductService" + error);
   }
 };

@@ -1,4 +1,4 @@
-const { getAllProductsService, getProductByIdService } = require("../services/productsServices");
+const { getAllProductsService, getProductByIdService, deleteProductService } = require("../services/productsServices");
 const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
 
 exports.readProducts = async (req, res) => {
@@ -28,6 +28,30 @@ exports.readProductById = async (req, res) => {
     res.status(500).send({
       code: 500,
       message: "Error al obtener los productos",
+    });
+    throw Error("Error 500");
+  }
+};
+
+exports.deleteProduct = async (req, res) => {
+  try {
+    console.log("CONTROLLER - deleteProduct");
+    
+    const idProduct = req.params.id;
+    const product = await deleteProductService(idProduct);
+
+    if (product.length === 0) {
+      return res
+        .status(404)
+        .send(`No se puede eliminar producto con id:${idProduct}`);
+    }
+
+    res.setHeader(CONTENT_TYPE, TYPE_JSON);
+    res.status(200).send(JSON.stringify(product));
+  } catch (error) {
+    res.status(500).send({
+      code: 500,
+      message: "Error al borrar el producto",
     });
     throw Error("Error 500");
   }
