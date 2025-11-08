@@ -1,4 +1,4 @@
-const { getAllProductsService } = require("../services/productsServices");
+const { getAllProductsService, getProductByIdService } = require("../services/productsServices");
 const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
 
 exports.readProducts = async (req, res) => {
@@ -8,5 +8,27 @@ exports.readProducts = async (req, res) => {
   } catch (error) {
     res.status(404).send("Recurso no encontrado");
     throw Error("Error en CONTROLLER - getAllFrontendLanguajes - " + error);
+  }
+};
+
+exports.readProductById = async (req, res) => {
+  try {
+    let productId = req.params.id;
+    console.log(`Id recibido por param: ${productId}`);
+
+    const filteredProduct = await getProductByIdService(productId);
+
+    if (filteredProduct === 0) {
+      return res.status(404).send(`No se encontró producto id:${productId}`);
+    }
+
+    res.setHeader(CONTENT_TYPE, TYPE_JSON);
+    res.status(200).send(JSON.stringify(filteredProduct));
+  } catch (error) {
+    res.status(500).send({
+      code: 500,
+      message: "Error al obtener los productos",
+    });
+    throw Error("Error 500");
   }
 };
