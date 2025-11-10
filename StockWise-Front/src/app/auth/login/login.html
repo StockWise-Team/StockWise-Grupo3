@@ -1,1 +1,16 @@
-<p>login works!</p>
+<div>
+    <div>
+        <form action>
+        <label for="usuario">Usuario:</label>
+        <br>
+        <input type="text" placeholder="Ingresa tu correo" name="usuario" [(ngModel)]="usuario">
+        <br>
+        <label for="contra">Contraseña:</label>
+        <br>
+        <input type="password" name="contra" placeholder="Ingresa tu contraseña" [(ngModel)]="contra">
+        </form>
+    </div>
+
+</div>
+
+<button (click)="testean2()">Boton</button>
