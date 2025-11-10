@@ -10,6 +10,7 @@ import { SalesPageSaleFormComponent } from './pages/sales-page/sales-page-sales/
 import { SalesPageProductsTableComponent } from './pages/sales-page/sales-page-products/components/products-table/sales-page-products-table.component';
 import { Login } from './auth/login/login';
 import { HomePage } from './pages/home-page/home-page';
+import { ProductsPage } from './pages/products-page/products-page';
 
 @Component({
   selector: 'app-home',
@@ -31,24 +32,28 @@ import { HomePage } from './pages/home-page/home-page';
       </div>
     </main>
   `,
-  imports: [Sidemenu, Header, Footer]
+  imports: [Sidemenu, Header, Footer],
 })
 export class HomeComponent {}
 
 export const routes: Routes = [
-    { path: '', component: Login }, 
-    {
-        path: 'home',
-        component: HomeComponent
-    },
-    {
-        path: 'sales-page',
-        component: SalesPageLayoutComponent,
-        children: [
-            { path: '', redirectTo: 'sales', pathMatch: 'full' },
-            { path: 'sales', component: SalesPageSalesTableComponent },
-            { path: 'sales/new', component: SalesPageSaleFormComponent },
-            { path: 'products', component: SalesPageProductsTableComponent },
-        ],
-    },
+  { path: '', component: Login },
+  {
+    path: 'home',
+    component: HomeComponent,
+  },
+  {
+    path: 'products',
+    component: ProductsPage,
+  },
+  {
+    path: 'sales-page',
+    component: SalesPageLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'sales', pathMatch: 'full' },
+      { path: 'sales', component: SalesPageSalesTableComponent },
+      { path: 'sales/new', component: SalesPageSaleFormComponent },
+      { path: 'products', component: SalesPageProductsTableComponent },
+    ],
+  },
 ];

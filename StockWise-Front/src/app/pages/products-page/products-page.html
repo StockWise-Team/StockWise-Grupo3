@@ -1,1 +1,134 @@
-<p>products-page works!</p>
+<main class="min-h-screen bg-gray-50/50 flex flex-row w-screen">
+  <app-sidemenu />
+  <div class="p-4 flex flex-col w-full">
+    <app-header />
+    <div class="mt-4">
+      <div class="p-8">
+        <h1 class="text-2xl font-bold">Productos</h1>
+      </div>
+      <div
+        class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
+        <div class="p-6 overflow-x-scroll px-0 pt-0 pb-2">
+          <table class="w-full min-w-[640px] table-auto">
+            <thead>
+              <tr>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans font-bold font-medium uppercase text-blue-gray-400">
+                    ID
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                    NOMBRE
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                    DESCRIPCION
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                    CATEGORIA
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                    PRECIO
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                    ACTIVO
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                    ACCIONES
+                  </p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(product of productsList; track product.ID){<tr>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <div class="flex items-center ">
+                    <p class="block antialiased font-sans leading-normal text-blue-gray-900 font-bold">
+                      {{product.ID}}
+                    </p>
+                  </div>
+                </td>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <p class="block antialiased font-sans font-medium text-blue-gray-600">
+                    {{product.NOMBRE}}
+                  </p>
+                </td>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <div class="w-10/12">
+                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
+                      {{product.DESCRIPCION}}
+                    </p>
+
+                  </div>
+                </td>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <div class="w-10/12">
+                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
+                      {{product.CATEGORIA}}
+                    </p>
+                  </div>
+                </td>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <div class="w-10/12">
+                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
+                      {{product.PRECIO}}
+                    </p>
+
+                  </div>
+                </td>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <div class="w-10/12">
+                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
+                      {{product.ACTIVO}}
+                    </p>
+                  </div>
+                </td>
+                <button type="button"
+                  class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                  <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                      d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <button type="button"
+                  class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                  <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                      d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <button type="button"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                  <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd"
+                      d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </button>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="fixed bottom-1 left-80 right-0">
+      <app-footer />
+    </div>
+  </div>
+</main>
