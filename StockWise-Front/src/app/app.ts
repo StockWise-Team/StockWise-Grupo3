@@ -11,5 +11,6 @@ import { Footer } from './shared/footer/footer';
   styleUrl: './app.css'
 })
 export class App {
+  
   protected readonly title = signal('StockWise-Front');
 }

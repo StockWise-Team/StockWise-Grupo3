@@ -1,0 +1,24 @@
+<aside class="w-56 h-full border-r border-gray-200 flex flex-col p-3 gap-3">
+  <h2 class="text-sm text-gray-500">Menú</h2>
+
+  <nav class="flex flex-col gap-2">
+    <a
+      routerLink="/sales-page/sales"
+      routerLinkActive="bg-primary-100 text-primary-800"
+      [routerLinkActiveOptions]="{ exact: false }"
+      class="px-3 py-2 rounded hover:bg-gray-100">
+      Ventas
+    </a>
+    <a
+      routerLink="/sales-page/products"
+      routerLinkActive="bg-primary-100 text-primary-800"
+      class="px-3 py-2 rounded hover:bg-gray-100">
+      Productos
+    </a>
+  </nav>
+
+  <div class="mt-auto flex items-center justify-between">
+    <button class="px-3 py-2 rounded border border-gray-300 hover:bg-gray-50">Cerrar Caja</button>
+    <button title="Profile" class="w-8 h-8 rounded-full bg-gray-300"></button>
+  </div>
+</aside>
