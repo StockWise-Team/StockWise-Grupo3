@@ -1,7 +1,12 @@
 module.exports = {
-  getAllProductSQL: "SELECT NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO FROM PRODUCTOS",
-  createSaleSQL: `
-    INSERT INTO VENTAS (ID_USUARIO, ID_PRODUCTO, CANTIDAD, PRECIO_UNITARIO, TOTAL, FECHA)
-    VALUES (@idUsuario, @idProducto, @cantidad, @precioUnitario, @total, @fecha)
-  `,
+
+  getAllProductSQL: "SELECT * FROM Productos",
+  getProductByIdSQL: `SELECT * FROM Productos WHERE ID = @ID`,
+  deleteProductSQL: `UPDATE Productos SET ACTIVO = 0 WHERE ID = @ID`,
+  createProductSQL: `INSERT INTO PRODUCTOS (NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO) 
+  VALUES (@NOMBRE, @DESCRIPCION, @CATEGORIA, @PRECIO, @ACTIVO)`,
+  updateProductSQL: `UPDATE Productos 
+  SET NOMBRE = @NOMBRE, DESCRIPCION = @DESCRIPCION, CATEGORIA = @CATEGORIA, PRECIO = @PRECIO, ACTIVO = @ACTIVO
+  WHERE ID = @ID`,
+
 };
