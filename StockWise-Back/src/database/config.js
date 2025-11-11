@@ -13,7 +13,11 @@ const configDB = {
     encrypt: false,
     trustServerCertificate: true,
     trustedConnection: true,  
+    encrypt: false, // Para desarrollo local
+    enableArithAbort: true,
   },
+  connectionTimeout: 30000,
+  requestTimeout: 30000,
 };
 
 module.exports = configDB;
