@@ -1,7 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Sidemenu } from '../../shared/sidemenu/sidemenu';
-import { Header } from '../../shared/header/header';
-import { Footer } from '../../shared/footer/footer';
 import { IProduct } from './models/products.model';
 import { ProductApiService } from './services/products.service';
 import { ModalDetails } from './modals/modal-details/modal-details';
@@ -10,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products-page',
-  imports: [Sidemenu, Header, Footer, ModalDetails, ModalEdit, CommonModule],
+  imports: [ ModalDetails, ModalEdit, CommonModule],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css',
 })

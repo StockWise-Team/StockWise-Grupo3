@@ -7,6 +7,7 @@ import { Login } from './auth/login/login';
 import { HomePage } from './pages/home-page/home-page';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
+import { ProductsPage } from './pages/products-page/products-page';
 
 // @Component({
 //   selector: 'app-home',
@@ -33,35 +34,40 @@ import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
 // export class HomeComponent {}
 
 export const routes: Routes = [
-    { path: '', component: Login }, 
-    {
-        path: 'admin',
-        component: AdminLayout,
-        children: [
-          {
-            path: 'home',
-            component: HomePage
-          }
-        ]
-    },
-    {
-      path:'employee',
-      component: EmployeeLayout,
-      children:[
-        {
-          path: 'home',
-          component: HomePage
-        }
-      ]
-    },
-    {
-        path: 'sales-page',
-        component: SalesPageLayoutComponent,
-        children: [
-            { path: '', redirectTo: 'sales', pathMatch: 'full' },
-            { path: 'sales', component: SalesPageSalesTableComponent },
-            { path: 'sales/new', component: SalesPageSaleFormComponent },
-            { path: 'products', component: SalesPageProductsTableComponent },
-        ],
-    },
+  { path: '', component: Login },
+  {
+    path: 'admin',
+    component: AdminLayout,
+    children: [
+      {
+        path: 'home',
+        component: HomePage,
+      },
+      {
+        path: 'products',
+        component: ProductsPage,
+      },
+    ],
+  },
+
+  {
+    path: 'employee',
+    component: EmployeeLayout,
+    children: [
+      {
+        path: 'home',
+        component: HomePage,
+      },
+    ],
+  },
+  {
+    path: 'sales-page',
+    component: SalesPageLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'sales', pathMatch: 'full' },
+      { path: 'sales', component: SalesPageSalesTableComponent },
+      { path: 'sales/new', component: SalesPageSaleFormComponent },
+      { path: 'products', component: SalesPageProductsTableComponent },
+    ],
+  },
 ];
