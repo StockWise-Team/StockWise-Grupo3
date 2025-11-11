@@ -56,7 +56,6 @@ exports.deleteProductRepository = async (id) => {
     if (foundProduct.recordset.length == 0) {
       console.log("Producto no encontrado");
     } else {
-      console.log(foundProduct.recordset[0].ACTIVO);
       if (foundProduct.recordset[0].ACTIVO) {
         result = await pool
           .request()

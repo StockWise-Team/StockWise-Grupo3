@@ -1,22 +1,69 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { IProduct } from '../../models/products.model';
+import { FormsModule } from '@angular/forms';
+import { ProductApiService } from '../../services/products.service';
 
 @Component({
   selector: 'app-modal-edit',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './modal-edit.html',
   styleUrl: './modal-edit.css',
 })
 export class ModalEdit {
-  @Input() isVisible: boolean = false;
-
+  // Input que indica si se debe mostrar o no el modal por parte del componente padre
+  @Input() isVisible: boolean = true;
   // Output para notificar al componente padre que se debe cerrar
-  @Output() close = new EventEmitter<void>();
+  @Output() close = new EventEmitter<boolean>();
+  @Input() detailProduct: IProduct | undefined;
+
+  nombre: string = '';
+  categoria: string = '';
+  descripcion: string = '';
+  precio: number = 0;
+
+  constructor(private _apiProducts: ProductApiService, private cdRef: ChangeDetectorRef) {}
+
+  updateProduct() {
+    const updatedProduct: IProduct = {
+      ID: this.detailProduct?.ID ?? 0,
+      NOMBRE: this.nombre == '' ? this.detailProduct?.NOMBRE ?? '' : this.nombre.toUpperCase(),
+      CATEGORIA:
+        this.categoria == '' ? this.detailProduct?.CATEGORIA ?? '' : this.categoria.toUpperCase(),
+      DESCRIPCION:
+        this.descripcion == ''
+          ? this.detailProduct?.DESCRIPCION ?? ''
+          : this.descripcion.toUpperCase(),
+      PRECIO: this.precio == null ? this.detailProduct?.PRECIO ?? 0 : this.precio,
+      ACTIVO: this.detailProduct?.ACTIVO ?? true,
+    };
+
+    this._apiProducts.udpateProductAPI(updatedProduct).subscribe({
+      next: (data) => {
+        this.nombre = '';
+        this.categoria = '';
+        this.descripcion = '';
+        this.precio = 0;
+
+        this.close.emit(true);
+        this.isVisible = false;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
 
   /**
    * Cierra el modal y emite el evento 'close'.
    */
   closeModal(): void {
-    this.close.emit();
+    this.nombre = '';
+    this.categoria = '';
+    this.descripcion = '';
+    this.precio = 0;
+    
+    this.isVisible = false;
+    this.close.emit(true);
   }
 }

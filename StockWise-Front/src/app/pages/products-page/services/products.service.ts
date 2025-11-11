@@ -18,4 +18,15 @@ export class ProductApiService {
   updateProductStatusAPI(id: number) {
     return this._httpClient.delete<IProduct[]>(`${this.apiURL}/${id}`);
   }
+
+  udpateProductAPI(product: IProduct) {
+    let data = {
+      NOMBRE: product.NOMBRE,
+      CATEGORIA: product.CATEGORIA,
+      DESCRIPCION: product.DESCRIPCION,
+      PRECIO: product.PRECIO,
+      ACTIVO: product.ACTIVO,
+    };
+    return this._httpClient.put<IProduct[]>(`${this.apiURL}/${product.ID}`, data);
+  }
 }

@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products-page',
-  imports: [ ModalDetails, ModalEdit, CommonModule],
+  imports: [ModalDetails, ModalEdit, CommonModule],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css',
 })
@@ -64,11 +64,21 @@ export class ProductsPage {
     });
   }
 
-  openModalEdit(): void {
+  openModalEdit(product: IProduct): void {
     this.showModalEdit = true;
+    this.producDetail = product;
   }
 
   closeModalEdit(): void {
     this.showModalEdit = false;
+  }
+
+  recargarDatosPadre(exito: boolean): void {
+    this.showModalEdit = false; // Oculta el componente modal
+
+    if (exito) {
+      // Actualizacion de la tabla con los datos nuevos
+      this.getAllProducts();
+    }
   }
 }

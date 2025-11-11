@@ -51,7 +51,6 @@
                     {{product.NOMBRE}}
                   </p>
                 </td>
-
                 <td class="py-3 px-5 border-b border-blue-gray-50">
                   <div class="w-10/12">
                     <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
@@ -94,7 +93,7 @@
                       d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
                 </button>}
-                <button type="button" (click)="openModalEdit()"
+                <button type="button" (click)="openModalEdit(product)"
                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                   <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -115,7 +114,6 @@
   </div>
 
   <app-modal-details [isVisible]="showModalDetail" (close)="closeModalDetail()" [detailProduct]="producDetail" />
-  <app-modal-edit [isVisible]="showModalEdit" (close)="closeModalEdit()">
-    <p class="text-red-600">¡Modal Editar: Este texto fue proyectado desde el componente padre!</p>
-  </app-modal-edit>
+  <app-modal-edit [isVisible]="showModalEdit" (close)="recargarDatosPadre($event)" [detailProduct]="producDetail" />
+
 </main>
