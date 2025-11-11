@@ -12,6 +12,14 @@ export class ProductApiService {
   constructor(private _httpClient: HttpClient) {}
 
   getProductsAPI(): Observable<IProduct[]> {
-    return this._httpClient.get<any[]>(this.apiURL);
+    return this._httpClient.get<IProduct[]>(this.apiURL);
+  }
+
+  getProductByIdAPI(id: string): Observable<IProduct> {
+    return this._httpClient.get<IProduct>(`${this.apiURL}/${id}`);
+  }
+
+  getProductByIdAPI2(): Observable<IProduct> {
+    return this._httpClient.get<IProduct>(`${this.apiURL}/2`);
   }
 }

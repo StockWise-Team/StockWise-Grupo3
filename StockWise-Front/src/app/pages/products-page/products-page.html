@@ -13,37 +13,27 @@
             <thead>
               <tr>
                 <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                  <p class="block antialiased font-sans font-bold font-medium uppercase text-blue-gray-400">
+                  <p class="block antialiased font-sans font-bold uppercase text-blue-gray-400">
                     ID
                   </p>
                 </th>
                 <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                  <p class="block antialiased font-sans uppercase text-blue-gray-400">
                     NOMBRE
                   </p>
                 </th>
                 <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                  <p class="block antialiased font-sans uppercase text-blue-gray-400">
                     DESCRIPCION
                   </p>
                 </th>
                 <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                  <p class="block antialiased font-sans uppercase text-blue-gray-400">
                     CATEGORIA
                   </p>
                 </th>
-                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                    PRECIO
-                  </p>
-                </th>
-                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
-                    ACTIVO
-                  </p>
-                </th>
-                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
-                  <p class="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
+                <th class="border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans uppercase text-blue-gray-400">
                     ACCIONES
                   </p>
                 </th>
@@ -63,14 +53,7 @@
                     {{product.NOMBRE}}
                   </p>
                 </td>
-                <td class="py-3 px-5 border-b border-blue-gray-50">
-                  <div class="w-10/12">
-                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
-                      {{product.DESCRIPCION}}
-                    </p>
 
-                  </div>
-                </td>
                 <td class="py-3 px-5 border-b border-blue-gray-50">
                   <div class="w-10/12">
                     <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
@@ -80,20 +63,13 @@
                 </td>
                 <td class="py-3 px-5 border-b border-blue-gray-50">
                   <div class="w-10/12">
-                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
-                      {{product.PRECIO}}
-                    </p>
-
-                  </div>
-                </td>
-                <td class="py-3 px-5 border-b border-blue-gray-50">
-                  <div class="w-10/12">
-                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
-                      {{product.ACTIVO}}
+                    <p class="antialiased font-sans mb-1 block font-medium text-green-600"
+                      [ngClass]="{ 'text-red-600': !product?.ACTIVO }">
+                      {{product?.ACTIVO ? "Activo": "Inactivo"}}
                     </p>
                   </div>
                 </td>
-                <button type="button" (click)="openModalDetail()"
+                <button type="button" (click)="openModalDetail(product)"
                   class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                   <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -132,9 +108,7 @@
     </div>
   </div>
 
-  <app-modal-details [isVisible]="showModalDetail" (close)="closeModalDetail()">
-    <p class="text-red-600">¡Modal Detalles: Este texto fue proyectado desde el componente padre!</p>
-  </app-modal-details>
+  <app-modal-details [isVisible]="showModalDetail" (close)="closeModalDetail()" [detailProduct]="producDetail" />
   <app-modal-confirm [isVisible]="showModalConfirm" (close)="closeModalConfirmDelete()">
     <p class="text-red-600">¡Modal Eliminar: Este texto fue proyectado desde el componente padre!</p>
   </app-modal-confirm>
