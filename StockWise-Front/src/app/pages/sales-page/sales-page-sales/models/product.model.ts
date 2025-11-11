@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   unitPrice: number;
   imageUrl?: string; // opcional, placeholder si no existe
+  stockSucursal?: number; // stock disponible en sucursal
 }
 
 export interface SaleItem {

@@ -4,16 +4,28 @@ const {
   deleteProductService,
   createProductService,
   updateProductService,
+  getProductsWithStockService,
 } = require("../services/productsServices");
 const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
 
+// Obtener productos - si withStock=true, solo muestra productos con stock en sucursal
 exports.readProducts = async (req, res) => {
   try {
     res.setHeader(CONTENT_TYPE, TYPE_JSON);
-    res.status(200).send(await getAllProductsService());
+    
+    // Si se solicita solo productos con stock (para ventas)
+    const withStock = req.query.withStock === 'true';
+    
+    if (withStock) {
+      console.log('Obteniendo productos con stock disponible...');
+      res.status(200).send(await getProductsWithStockService());
+    } else {
+      console.log('Obteniendo todos los productos...');
+      res.status(200).send(await getAllProductsService());
+    }
   } catch (error) {
     res.status(404).send("Recurso no encontrado");
-    throw Error("Error en CONTROLLER - getAllFrontendLanguajes - " + error);
+    throw Error("Error en CONTROLLER - readProducts - " + error);
   }
 };
 
