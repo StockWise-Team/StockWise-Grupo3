@@ -16,7 +16,7 @@ export class Login {
 
   constructor(private router:Router){}
   navegarHome(){
-    this.router.navigate(['home'])
+    this.router.navigate(['admin/home'])
 
   }
 
