@@ -78,15 +78,24 @@
                       clip-rule="evenodd" />
                   </svg>
                 </button>
-                <button type="button" (click)="openModalConfirmDelete()"
+                @if(product?.ACTIVO){
+                <button type="button" (click)="updateStatusProduct(product.ID)"
                   class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                   <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd"
-                      d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                      clip-rule="evenodd" />
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
                 </button>
+                }@else if(!product?.ACTIVO){
+                <button type="button" (click)="updateStatusProduct(product.ID)"
+                  class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">
+                  <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                </button>}
                 <button type="button" (click)="openModalEdit()"
                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                   <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
@@ -109,9 +118,6 @@
   </div>
 
   <app-modal-details [isVisible]="showModalDetail" (close)="closeModalDetail()" [detailProduct]="producDetail" />
-  <app-modal-confirm [isVisible]="showModalConfirm" (close)="closeModalConfirmDelete()">
-    <p class="text-red-600">¡Modal Eliminar: Este texto fue proyectado desde el componente padre!</p>
-  </app-modal-confirm>
   <app-modal-edit [isVisible]="showModalEdit" (close)="closeModalEdit()">
     <p class="text-red-600">¡Modal Editar: Este texto fue proyectado desde el componente padre!</p>
   </app-modal-edit>

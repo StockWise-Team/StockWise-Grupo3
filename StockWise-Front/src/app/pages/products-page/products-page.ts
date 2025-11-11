@@ -5,13 +5,12 @@ import { Footer } from '../../shared/footer/footer';
 import { IProduct } from './models/products.model';
 import { ProductApiService } from './services/products.service';
 import { ModalDetails } from './modals/modal-details/modal-details';
-import { ModalConfirm } from './modals/modal-confirm/modal-confirm';
 import { ModalEdit } from './modals/modal-edit/modal-edit';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-products-page',
-  imports: [Sidemenu, Header, Footer, ModalDetails, ModalConfirm, ModalEdit, CommonModule],
+  imports: [Sidemenu, Header, Footer, ModalDetails, ModalEdit, CommonModule],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css',
 })
@@ -36,10 +35,9 @@ export class ProductsPage {
   }
 
   getAllProducts() {
-    this._apiProducts.getProductsAPI().subscribe({
+    this._apiProducts.getAllProductsAPI().subscribe({
       next: (data) => {
         this.productsList = data;
-        console.log(this.productsList);
 
         this.cdRef.detectChanges();
       },
@@ -58,12 +56,15 @@ export class ProductsPage {
     this.showModalDetail = false;
   }
 
-  openModalConfirmDelete(): void {
-    this.showModalConfirm = true;
-  }
-
-  closeModalConfirmDelete(): void {
-    this.showModalConfirm = false;
+  updateStatusProduct(id: number): void {
+    this._apiProducts.updateProductStatusAPI(id).subscribe({
+      next: (data) => {
+        this.getAllProducts();
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 
   openModalEdit(): void {

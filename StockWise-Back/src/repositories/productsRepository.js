@@ -5,6 +5,7 @@ const {
   deleteProductSQL,
   createProductSQL,
   updateProductSQL,
+  activeProductSQL,
 } = require("../database/queries");
 const sql = require("mssql");
 
@@ -15,7 +16,6 @@ exports.getAllProductsRepository = async () => {
     const result = await pool.request().query(getAllProductSQL);
 
     return result.recordset; // Devolver directamente el array sin stringify
-
   } catch (error) {
     console.log("Error en REPOSITORY - getAllProductsRepository - " + error);
     throw Error("Error en REPOSITORY - getAllProductsRepository - " + error);
@@ -44,6 +44,7 @@ exports.getProductByIdRepository = async (id) => {
 
 exports.deleteProductRepository = async (id) => {
   const pool = await getConnectionSQL();
+  let result;
 
   try {
     console.log(`REPOSITORY - deleteProductRepository - id:${id}`);
@@ -55,17 +56,25 @@ exports.deleteProductRepository = async (id) => {
     if (foundProduct.recordset.length == 0) {
       console.log("Producto no encontrado");
     } else {
-      console.log(foundProduct.recordset[0]);
-      const deletedProduct = await pool
-        .request()
-        .input("id", sql.Int, id)
-        .query(deleteProductSQL);
+      console.log(foundProduct.recordset[0].ACTIVO);
+      if (foundProduct.recordset[0].ACTIVO) {
+        result = await pool
+          .request()
+          .input("id", sql.Int, id)
+          .query(deleteProductSQL);
+      }
+      if (!foundProduct.recordset[0].ACTIVO) {
+        result = await pool
+          .request()
+          .input("id", sql.Int, id)
+          .query(activeProductSQL);
+      }
 
       console.log(
         `Producto Eliminado - NOMBRE: ${foundProduct.recordset[0].NOMBRE}`
       );
 
-      return deletedProduct.rowsAffected[0];
+      return result.rowsAffected[0];
     }
   } catch (error) {
     console.log("Error en REPOSITORY - deleteProductRepository - " + error);
@@ -129,7 +138,7 @@ exports.updateProductRepository = async (id, product) => {
         `Producto Actualizado - NOMBRE: ${foundProduct.recordset[0].NOMBRE}`
       );
       console.log(product);
-      
+
       return updatedProduct.rowsAffected[0];
     }
   } catch (error) {
