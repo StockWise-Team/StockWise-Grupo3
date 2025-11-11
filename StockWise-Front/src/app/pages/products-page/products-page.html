@@ -93,7 +93,7 @@
                     </p>
                   </div>
                 </td>
-                <button type="button"
+                <button type="button" (click)="openModalDetail()"
                   class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                   <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -102,7 +102,7 @@
                       clip-rule="evenodd" />
                   </svg>
                 </button>
-                <button type="button"
+                <button type="button" (click)="openModalConfirmDelete()"
                   class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                   <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -111,7 +111,7 @@
                       clip-rule="evenodd" />
                   </svg>
                 </button>
-                <button type="button"
+                <button type="button" (click)="openModalEdit()"
                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                   <svg class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -131,4 +131,14 @@
       <app-footer />
     </div>
   </div>
+
+  <app-modal-details [isVisible]="showModalDetail" (close)="closeModalDetail()">
+    <p class="text-red-600">¡Modal Detalles: Este texto fue proyectado desde el componente padre!</p>
+  </app-modal-details>
+  <app-modal-confirm [isVisible]="showModalConfirm" (close)="closeModalConfirmDelete()">
+    <p class="text-red-600">¡Modal Eliminar: Este texto fue proyectado desde el componente padre!</p>
+  </app-modal-confirm>
+  <app-modal-edit [isVisible]="showModalEdit" (close)="closeModalEdit()">
+    <p class="text-red-600">¡Modal Editar: Este texto fue proyectado desde el componente padre!</p>
+  </app-modal-edit>
 </main>
