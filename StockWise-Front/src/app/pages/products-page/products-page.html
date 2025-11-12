@@ -1,4 +1,4 @@
-<main class="min-h-screen bg-gray-50/50 flex flex-row ">
+<main class="bg-gray-50/50 flex flex-row ">
   <div class="p-1 flex flex-col w-full">
     <div class="mt-1">
       <div class="p-1 flex justify-between content-between">
@@ -55,7 +55,7 @@
               </tr>
             </thead>
             <tbody>
-              @for(product of itemsFiltrados; track product.ID){<tr>
+              @for(product of paginatedItems; track product.ID){<tr>
                 <td class="py-6 px-5 border-b border-blue-gray-50">
                   <div class="flex items-center ">
                     <p class="block antialiased font-sans leading-normal text-blue-gray-900 font-bold text-xl">
@@ -142,6 +142,48 @@
       </div>
     </div>
     <div class="fixed bottom-1 left-80 right-0">
+    </div>
+    <div class="container bottom-1 mx-auto p-4 p-1 flex justify-between content-between">
+      <!-- <div class="space-y-3 mb-6">
+        @for(item of paginatedItems; track item.ID){<div
+          class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+          <p class="font-medium text-indigo-600">ID: {{ item.ID }}</p>
+          <p class="text-gray-700">{{ item.NOMBRE }}</p>
+        </div>}
+      </div> -->
+      @if(((currentPage - 1) * itemsPerPage + 9) > totalItems){
+      <p class="mt-4 font-sans mb-1 block font-medium text-blue-gray-600 text-2xl">
+        Mostrando {{ totalItems }} de {{ totalItems }} elementos.
+      </p>
+      }@else {
+      <p class="font-sans mb-1 block font-medium text-blue-gray-600 text-2xl">
+        Mostrando {{ (currentPage - 1) * itemsPerPage + 9 }} de {{ totalItems }} elementos.
+      </p>
+      }
+
+      <nav class="flex justify-center items-center space-x-2">
+        <button (click)="prevPage()" [disabled]="currentPage === 1"
+          class="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-150 text-xl" [ngClass]="{
+        'bg-indigo-100 text-indigo-700 hover:bg-indigo-200': currentPage > 1,
+        'bg-gray-100 text-gray-400 cursor-not-allowed': currentPage === 1
+      }">
+          Anterior
+        </button>
+        <button *ngFor="let page of pageNumbers" (click)="goToPage(page)"
+          class="w-10 h-10 text-sm font-medium rounded-full transition-colors duration-150" [ngClass]="{
+        'bg-indigo-600 text-white shadow-md': page === currentPage,
+        'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50': page !== currentPage
+      }">
+          {{ page }}
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+          class="px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-150" [ngClass]="{
+        'bg-indigo-100 text-indigo-700 hover:bg-indigo-200': currentPage < totalPages,
+        'bg-gray-100 text-gray-400 cursor-not-allowed': currentPage === totalPages
+      }">
+          Siguiente
+        </button>
+      </nav>
     </div>
   </div>
 
