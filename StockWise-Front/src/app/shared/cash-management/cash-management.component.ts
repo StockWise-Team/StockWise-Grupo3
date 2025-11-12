@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgIf, CurrencyPipe, DatePipe } from '@angular/common';
-import { CashService, CashStatus } from '../services/cash.service';
+import { CashService, CashStatus } from '../../services/cash.service';
 
 @Component({
   selector: 'app-cash-management',
