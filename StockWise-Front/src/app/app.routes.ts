@@ -5,6 +5,7 @@ import { SalesPageSaleFormComponent } from './pages/sales-page/sales-page-sales/
 import { SalesPageProductsTableComponent } from './pages/sales-page/sales-page-products/components/products-table/sales-page-products-table.component';
 import { Login } from './auth/login/login';
 import { HomePage } from './pages/home-page/home-page';
+import { UsersTable } from './shared/users-table/users-table';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
 import { StockPage } from './pages/stock-page/stock-page';
@@ -34,7 +35,7 @@ export const routes: Routes = [
       },
       {
         path: 'users',
-        component: HomePage,
+        component: UsersTable,
       },
       {
         path: 'cash-register',

@@ -7,7 +7,7 @@
       </h6>
       <br />
       <h3 class="font-extrabold uppercase text-white">
-        @if (role === Roles.ADMIN) { Admin } @else { Employee }
+        @if (role === Role.ADMIN) { Admin } @else { Employee }
       </h3>
     </a>
     <button
@@ -49,7 +49,7 @@
           </button>
         </a>
       </li>
-      @if (role === Roles.EMPLOYEE) {
+      @if (role === Role.EMPLOYEE) {
       <li>
         <a routerLink="/employee/sales" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
           <button
@@ -114,7 +114,7 @@
       </li>
       }
 
-      @if (role === Roles.ADMIN) {
+      @if (role === Role.ADMIN) {
       <li>
         <a routerLink="/admin/stock" routerLinkActive="active">
           <button
@@ -209,10 +209,13 @@
       </li> -->
     </ul>
     <ul class="">
-      @if (role === Roles.EMPLOYEE) {
-      <div class="border-t border-white/20">
-        <div class="flex items-center gap-2">
-          <button *ngIf="!loading()" (click)="onCashAction()" [class]="
+      @if (role === Role.EMPLOYEE) {
+        <div class="border-t border-white/20">
+          <div class="flex items-center gap-2">
+            <button
+              *ngIf="!loading()"
+              (click)="onCashAction()"
+              [class]="
                 cashStatus()?.cashOpen
                   ? 'flex-1 px-3 py-2 text-sm rounded bg-red-600 hover:bg-red-700 transition'
                   : 'flex-1 px-3 py-2 text-sm rounded bg-primary-500 hover:bg-primary-600 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/40 transition'

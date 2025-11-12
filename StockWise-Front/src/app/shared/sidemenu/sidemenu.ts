@@ -1,20 +1,10 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Roles } from '../../enums/rolesEnum';
-import {
-  BoxIcon,
-  CartIcon,
-  HouseIcon,
-  TableIcon,
-  BellIcon,
-  ProfileIcon,
-  CrossIcon,
-  AddUserIcon,
-  GetInIcon,
-} from '../../icons';
+import { BoxIcon, CartIcon, HouseIcon, TableIcon, CrossIcon, AddUserIcon, GetInIcon } from '../../icons';
 import { CommonModule } from '@angular/common';
 import { CashService } from '../../services/cash.service';
 import { CashStatus } from '@app/models/cash.model';
+import { Role } from '@app/enums/rolesEnum';
 
 @Component({
   selector: 'app-sidemenu',
@@ -23,9 +13,9 @@ import { CashStatus } from '@app/models/cash.model';
   styleUrl: './sidemenu.css',
 })
 export class Sidemenu {
-  Roles = Roles; //Expone el enum al template
+  Role = Role; //Expone el enum al template
 
-  @Input() role: Roles = Roles.ADMIN;
+  @Input() role:Role = Role.ADMIN;
 
   private readonly cashService = inject(CashService);
 
