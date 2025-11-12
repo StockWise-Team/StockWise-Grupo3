@@ -6,19 +6,38 @@ const {
   createProductSQL,
   updateProductSQL,
   activeProductSQL,
+  getProductsWithStockSQL,
 } = require("../database/queries");
 const sql = require("mssql");
 
+// Obtener todos los productos con información de stock
 exports.getAllProductsRepository = async () => {
   const pool = await getConnectionSQL();
-  //console.log("pool", pool);
   try {
     const result = await pool.request().query(getAllProductSQL);
 
-    return result.recordset; // Devolver directamente el array sin stringify
+    return result.recordset;
   } catch (error) {
     console.log("Error en REPOSITORY - getAllProductsRepository - " + error);
     throw Error("Error en REPOSITORY - getAllProductsRepository - " + error);
+  } finally {
+    pool.close();
+  }
+};
+
+// Obtener solo productos con stock disponible en sucursal (para ventas)
+exports.getProductsWithStockRepository = async () => {
+  const pool = await getConnectionSQL();
+  try {
+    const result = await pool.request().query(getProductsWithStockSQL);
+    return result.recordset;
+  } catch (error) {
+    console.log(
+      "Error en REPOSITORY - getProductsWithStockRepository - " + error
+    );
+    throw Error(
+      "Error en REPOSITORY - getProductsWithStockRepository - " + error
+    );
   } finally {
     pool.close();
   }

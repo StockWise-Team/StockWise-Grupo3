@@ -1,25 +1,35 @@
-const { authUsersService } = require("../services/authService");
-const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
+const { authUsersService } = require('../services/authService');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = 'prueba123';
 
 exports.authUsers = async (req, res) => {
   try {
-    const {email, contra} = req.query
-    if (!email || !contra){
-      return res.status(400).json({meesage: "Falta el parametro mail"})
+    const { mail, contra } = req.body; 
+
+    if (!mail || !contra) {
+      return res.status(400).json({ message: "Mail y contraseña requeridos" });
     }
 
-    const result = await authUsersService(email, contra)
-
-    if (result.length === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+    const user = await authUsersService(mail, contra); 
+    
+    if (!user) {
+      return res.status(401).json({ message: "Credenciales incorrectas" });
     }
+    
+    const payload = {
+      id: user.ID,
+      rol: user.ROL
+    };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '8h' });
 
-    res.json(result[0])
+    res.status(200).json({ 
+      message: "Login exitoso", 
+      token: token,
+      user: user
+    });
 
-    res.setHeader(CONTENT_TYPE, TYPE_JSON);
-    res.status(200).send(await authUsersService());
   } catch (error) {
-    res.status(404).send("Recurso no encontrado");
-    throw Error("Error en CONTROLLER - getAllFrontendLanguajes - " + error);
+    res.status(500).json({ message: "Error en el servidor", error: error.message });
   }
 };

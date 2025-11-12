@@ -7,31 +7,8 @@ import { Login } from './auth/login/login';
 import { HomePage } from './pages/home-page/home-page';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
-import { ProductsPage } from './pages/products-page/products-page';
-
-// @Component({
-//   selector: 'app-home',
-//   standalone: true,
-//   template: `
-//     <main class="min-h-screen bg-gray-50/50 flex flex-row w-screen">
-//       <app-sidemenu />
-//       <div class="p-4 flex flex-col w-full">
-//         <app-header />
-//         <div class="mt-4">
-//           <div class="p-8">
-//             <h1 class="text-2xl font-bold">Dashboard Principal</h1>
-//             <p>Contenido del dashboard principal</p>
-//           </div>
-//         </div>
-//         <div class="fixed bottom-1 left-80 right-0">
-//           <app-footer />
-//         </div>
-//       </div>
-//     </main>
-//   `,
-//   imports: [Sidemenu, Header, Footer]
-// })
-// export class HomeComponent {}
+import { StockPage } from './pages/stock-page/stock-page';
+import { RegisterClosingsPage } from './pages/register-closings-page/register-closings-page';
 
 export const routes: Routes = [
   { path: '', component: Login },
@@ -44,12 +21,27 @@ export const routes: Routes = [
         component: HomePage,
       },
       {
+        path: 'sales',
+        component: HomePage,
+      },
+      {
         path: 'products',
-        component: ProductsPage,
+        component: HomePage,
+      },
+      {
+        path: 'stock',
+        component: StockPage,
+      },
+      {
+        path: 'users',
+        component: HomePage,
+      },
+      {
+        path: 'cash-register',
+        component: RegisterClosingsPage,
       },
     ],
   },
-
   {
     path: 'employee',
     component: EmployeeLayout,
@@ -58,16 +50,23 @@ export const routes: Routes = [
         path: 'home',
         component: HomePage,
       },
+      { 
+        path: 'sales', 
+        component: SalesPageSalesTableComponent 
+      },
+      { 
+        path: 'sales/new', 
+        component: SalesPageSaleFormComponent 
+      },
+      { 
+        path: 'products', 
+        component: SalesPageProductsTableComponent
+      },
     ],
   },
-  {
-    path: 'sales-page',
-    component: SalesPageLayoutComponent,
-    children: [
-      { path: '', redirectTo: 'sales', pathMatch: 'full' },
-      { path: 'sales', component: SalesPageSalesTableComponent },
-      { path: 'sales/new', component: SalesPageSaleFormComponent },
-      { path: 'products', component: SalesPageProductsTableComponent },
-    ],
-  },
+  // {
+  //   path: 'sales-page',
+  //   component: SalesPageLayoutComponent,
+  //   children: [{ path: '', redirectTo: 'sales', pathMatch: 'full' }],
+  // },
 ];

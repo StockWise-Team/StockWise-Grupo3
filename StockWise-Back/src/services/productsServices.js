@@ -4,14 +4,24 @@ const {
   deleteProductRepository,
   createProductRepository,
   updateProductRepository,
+  getProductsWithStockRepository,
 } = require("../repositories/productsRepository");
 
+// Servicio para obtener todos los productos (incluye info de stock)
 exports.getAllProductsService = async () => {
   try {
     return await getAllProductsRepository();
   } catch (error) {
-    //res.status(404).send("Recurso no encontrado");
     throw Error("Error en Service - getAllProductsService - " + error);
+  }
+};
+
+// Servicio para obtener productos con stock disponible (para ventas)
+exports.getProductsWithStockService = async () => {
+  try {
+    return await getProductsWithStockRepository();
+  } catch (error) {
+    throw Error("Error en Service - getProductsWithStockService - " + error);
   }
 };
 

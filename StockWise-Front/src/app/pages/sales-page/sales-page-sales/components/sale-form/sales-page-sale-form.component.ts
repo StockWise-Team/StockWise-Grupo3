@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
-import { SalesPageSalesService } from '../../services/sales-page-sales.service';
-import { Product, SaleItem } from '../../models/product.model';
+import { Product, SaleItem } from '../../../../../models/product.model';
+import { CashService } from '../../../../../services/cash.service';
+import { SalesPageSalesService } from '@app/services';
 
 @Component({
   selector: 'sales-page-sale-form',
@@ -12,16 +13,26 @@ import { Product, SaleItem } from '../../models/product.model';
   templateUrl: './sales-page-sale-form.component.html',
   styleUrl: './sales-page-sale-form.component.css'
 })
-export class SalesPageSaleFormComponent {
-  private readonly salesSvc = inject(SalesPageSalesService);
-  private readonly router = inject(Router);
+export class SalesPageSaleFormComponent implements OnInit {
 
   searchQuery = '';
   suggestions: Product[] = [];
   items: SaleItem[] = [];
+  cashIsOpen: boolean = true; // Si llegamos aquí, la caja está abierta
+
+  constructor(
+    private salesSvc: SalesPageSalesService,
+    private cashService: CashService,
+    private router: Router
+  ) {}
 
   get totalAmount(): number {
     return this.items.reduce((sum, item) => sum + item.subtotal, 0);
+  }
+
+  ngOnInit(): void {
+    // Ya no verificamos aquí, si llegamos al formulario la caja está abierta
+    console.log('Formulario de venta cargado - Caja abierta');
   }
 
   onSearch() {
@@ -32,7 +43,7 @@ export class SalesPageSaleFormComponent {
 
     this.salesSvc.searchProducts(this.searchQuery).subscribe({
       next: (products) => {
-        this.suggestions = products;
+        this.suggestions = products.filter(p => p.id && p.id > 0);
       },
       error: (err) => {
         console.error('Error searching products:', err);
@@ -42,19 +53,25 @@ export class SalesPageSaleFormComponent {
   }
 
   onSelectProduct(product: Product) {
-    // Check if already added
-    const existing = this.items.find(it => it.product.id === product.id);
-    if (existing) {
-      existing.quantity++;
-      existing.subtotal = existing.quantity * existing.product.unitPrice;
+    const existingIndex = this.items.findIndex(item => item.product.id === product.id);
+
+    if (existingIndex >= 0) {
+      this.items[existingIndex].quantity++;
+      this.items[existingIndex].subtotal = this.items[existingIndex].quantity * this.items[existingIndex].product.unitPrice;
     } else {
-      this.items.push({
-        product,
+      const newItem: SaleItem = {
+        product: {
+          id: product.id,
+          name: product.name,
+          unitPrice: product.unitPrice,
+          imageUrl: product.imageUrl
+        },
         quantity: 1,
-        subtotal: product.unitPrice,
-      });
+        subtotal: product.unitPrice
+      };
+      this.items.push(newItem);
     }
-    // Clear search
+
     this.searchQuery = '';
     this.suggestions = [];
   }
@@ -80,20 +97,25 @@ export class SalesPageSaleFormComponent {
   }
 
   onCancelSale() {
-    this.router.navigate(['/sales-page/sales']);
+    this.router.navigate(['/employee/sales']);
   }
 
   onFinishSale() {
-    if (!this.items.length) return;
+    if (!this.items.length) {
+      console.log('No hay productos en la venta');
+      return;
+    }
+
+    console.log('Creando venta con items:', this.items);
 
     this.salesSvc.createOngoingSale(this.items).subscribe({
       next: (response) => {
-        // Sale completed successfully
-        this.router.navigate(['/sales-page/sales']);
+        console.log('Venta creada exitosamente:', response);
+        this.router.navigate(['/employee/sales']);
       },
       error: (err) => {
-        // Handle sale error
-        alert('Error al registrar la venta. Por favor intente nuevamente.');
+        console.error('Error al registrar la venta:', err);
+        this.router.navigate(['/employee/sales']);
       }
     });
   }
