@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
-import { Product, SaleItem } from '../../../../../models/product.model';
-import { CashService } from '../../../../../services/cash.service';
-import { SalesPageSalesService } from '@app/services';
+import { SalesPageSalesService } from '../../services/sales-page-sales.service';
+import { Product, SaleItem } from '../../models/product.model';
+import { CashService } from '../../../../../shared/services/cash.service';
 
 @Component({
   selector: 'sales-page-sale-form',

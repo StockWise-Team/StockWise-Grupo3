@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIf, CurrencyPipe } from '@angular/common';
-import { CashService, CashStatus } from '../../../../../services/cash.service';
+import { CashService, CashStatus } from '../../../../../shared/services/cash.service';
 
 @Component({
   selector: 'sales-page-sidebar',

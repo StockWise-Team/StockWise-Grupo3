@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SalesPageProductsService } from '../../../../../services/sales-page-products.service';
+import { SalesPageProductsService } from '../../services/sales-page-products.service';
 
 @Component({
   selector: 'sales-page-products-table',
