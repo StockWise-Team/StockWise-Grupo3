@@ -1,4 +1,5 @@
 export interface ProductDB {
+  ID: number;
   NOMBRE: string;
   DESCRIPCION?: string;
   CATEGORIA?: string;

@@ -8,7 +8,7 @@ import { Role } from '@app/enums/rolesEnum';
 
 @Component({
   selector: 'app-sidemenu',
-  imports: [CommonModule, RouterLink, RouterLinkActive, HouseIcon, CartIcon, BoxIcon, TableIcon, GetInIcon, CrossIcon, AddUserIcon],
+  imports: [CommonModule, RouterLink, RouterLinkActive, CartIcon, BoxIcon, GetInIcon],
   templateUrl: './sidemenu.html',
   styleUrl: './sidemenu.css',
 })
@@ -38,7 +38,7 @@ export class Sidemenu {
       error: (error) => {
         console.error('Error loading cash status:', error);
         this.loading.set(false);
-      }
+      },
     });
   }
 
@@ -69,7 +69,7 @@ export class Sidemenu {
       error: (error) => {
         console.error('Error opening cash:', error);
         this.loading.set(false);
-      }
+      },
     });
   }
 
@@ -102,7 +102,7 @@ export class Sidemenu {
       error: (error) => {
         console.error('Error closing cash:', error);
         this.loading.set(false);
-      }
+      },
     });
   }
 }
