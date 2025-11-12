@@ -1,5 +1,7 @@
 module.exports = {
-  //--- Consultas para productos
+  // ======================================
+  // Consultas para productos
+  // ======================================
   // Consulta para obtener todos los productos con su stock en sucursal
   getAllProductSQL: `
     SELECT 
@@ -37,7 +39,10 @@ module.exports = {
   updateProductSQL: `UPDATE Productos 
   SET NOMBRE = @NOMBRE, DESCRIPCION = @DESCRIPCION, CATEGORIA = @CATEGORIA, PRECIO = @PRECIO, ACTIVO = @ACTIVO
   WHERE ID = @ID`,
-  getAuthUser: "SELECT * FROM USUARIOS WHERE MAIL = @EMAIL",
+  // ======================================
+  // Consultas para ventas
+  // ======================================
+
   createSaleSQL: `INSERT INTO VENTAS (ID_USUARIO, ID_PRODUCTO, CANTIDAD, PRECIO_UNITARIO, TOTAL, FECHA, NUMERO_VENTA) 
   VALUES (@idUsuario, @idProducto, @cantidad, @precioUnitario, @total, @fecha, @numeroVenta)`,
 
@@ -88,8 +93,10 @@ module.exports = {
       AND v.NUMERO_VENTA IS NOT NULL 
     ORDER BY v.FECHA DESC, v.ID DESC
   `,
-
+  // ======================================
   // Consultas para gestión de caja
+  // ======================================
+
   // Abrir nueva caja
   openCashSQL: `
     INSERT INTO CIERRE_CAJA (ID_EMPLEADO, FECHA_APERTURA) 
@@ -132,7 +139,9 @@ module.exports = {
     LEFT JOIN USUARIOS u ON cc.ID_EMPLEADO = u.ID
     ORDER BY cc.FECHA_APERTURA DESC
   `,
-  //--- Consultas para manejo de stock
+  // ======================================
+  // Consultas para manejo de stock
+  // ======================================
 
   // Obtener todo los registros de stock
   getAllStock: "SELECT * FROM STOCK",
@@ -150,21 +159,44 @@ module.exports = {
     SET CANTIDAD_SUCURSAL = CANTIDAD_SUCURSAL - @cantidad 
     WHERE ID_PRODUCTO = @idProducto
   `,
-  // usuaarios queries
-  createNewUserSQL: `INSERT INTO USUARIOS (NOMBRE_COMPLETO, MAIL, CONTRASEÑA, ROL) 
+
+  // Crear registro de stock de un producto (nuevo por ejemplo)
+  createProductStockSQL: `INSERT INTO STOCK (ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL) 
+  VALUES (@ID_PRODUCTO, @CANTIDAD_DEPOSITO, @CANTIDAD_SUCURSAL)`,
+
+  // Actualizar registro completo de stock de un producto
+  updateProductStockSQL: `UPDATE STOCK 
+  SET ID_PRODUCTO = @ID_PRODUCTO, 
+      CANTIDAD_DEPOSITO = @CANTIDAD_DEPOSITO, 
+      CANTIDAD_SUCURSAL = @CANTIDAD_SUCURSAL
+  WHERE ID = @idStock`,
+
+  deleteProductStockByIdSQL: `
+  UPDATE STOCK 
+    SET CANTIDAD_DEPOSITO = 0,
+        CANTIDAD_SUCURSAL = 0, 
+    WHERE ID = @idStock
+  `,
+
+  // ======================================
+  // usuarios queries
+  // ======================================
+  getAuthUser: "SELECT * FROM USUARIOS WHERE MAIL = @EMAIL",
+  createNewUserSQL: `INSERT INTO USUARIOS (NOMBRE_COMPLETO, MAIL, CONTRASEÑA, ROL) 
     VALUES (@nombre_completo, @mail, @contraseña, @rol)`,
-  
-  updateUserSQL: `UPDATE USUARIOS 
+
+  updateUserSQL: `UPDATE USUARIOS 
     SET NOMBRE_COMPLETO = @nombre_completo, MAIL = @mail, ROL = @rol 
     WHERE ID = @id`,
 
-  deleteUserSQL: 'DELETE FROM USUARIOS WHERE ID = @id',
+  deleteUserSQL: "DELETE FROM USUARIOS WHERE ID = @id",
 
-  getAllUsersSQL: 'SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS',
+  getAllUsersSQL: "SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS",
 
-  getUserByIdSQL: 'SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS WHERE ID = @id',
+  getUserByIdSQL:
+    "SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS WHERE ID = @id",
 
-  getPasswordHashSQL: 'SELECT CONTRASEÑA FROM USUARIOS WHERE ID = @id',
-  
-  changePasswordSQL: 'UPDATE USUARIOS SET CONTRASEÑA = @newPass WHERE ID = @id'
+  getPasswordHashSQL: "SELECT CONTRASEÑA FROM USUARIOS WHERE ID = @id",
+
+  changePasswordSQL: "UPDATE USUARIOS SET CONTRASEÑA = @newPass WHERE ID = @id",
 };

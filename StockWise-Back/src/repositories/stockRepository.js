@@ -1,21 +1,107 @@
 const { getConnectionSQL } = require("../database/connection");
-const {
-  getAllStock,
-} = require("../database/queries");
+const { getAllStock, updateProductStockSQL, createProductStockSQL } = require("../database/queries");
 const sql = require("mssql");
 
-exports.getAllStockRepository = async () => {
+const getAllStockRepository = async () => {
   const pool = await getConnectionSQL();
 
   try {
     const result = await pool.request().query(getAllStock);
 
     return result.recordset;
-
   } catch (error) {
     console.log("Error en REPOSITORY - getStockRepository - " + error);
     throw Error("Error en REPOSITORY - getStockRepository - " + error);
   } finally {
     pool.close();
   }
+};
+
+const createProductStockRepository = async (stockInfo) => {
+  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL} = stockInfo;
+  const pool = await getConnectionSQL();
+  try {
+     console.log(`REPOSITORY - createProductStockRepository producto:${stockInfo}`);
+
+    await pool
+      .request()
+      .input("ID_PRODUCTO", sql.NVarChar, ID_PRODUCTO)
+      .input("CANTIDAD_DEPOSITO", sql.NVarChar, CANTIDAD_DEPOSITO)
+      .input("CANTIDAD_SUCURSAL", sql.NVarChar, CANTIDAD_SUCURSAL)
+      .query(createProductStockSQL);
+
+    return stockInfo;
+  } catch (error) {
+    console.log("Error en REPOSITORY - createProductStockRepository - " + error);
+    throw Error("Error en REPOSITORY - createProductStockRepository - " + error);
+  }finally {
+    pool.close();
+  }
+}
+
+const updateProductStockRepository = async (id, productStock) => {
+  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL } = productStock;
+  const pool = await getConnectionSQL();
+  try {
+    console.log(
+      `REPOSITORY - updateProductStockRepository id: ${id}  producto:${productStock}`
+    );
+
+    const foundProductStock = await pool
+      .request()
+      .input("id", sql.Int, id)
+      .query(updateProductStockSQL);
+
+    if (foundProductStock.recordset.length == 0) {
+      console.log("Registro de stock de producto no encontrado");
+    } else {
+      const updatedProductStock = await pool
+        .request()
+        .input("idStock", sql.Int, id)
+        .input("ID_PRODUCTO", sql.NVarChar, ID_PRODUCTO)
+        .input("CANTIDAD_DEPOSITO", sql.NVarChar, CANTIDAD_DEPOSITO)
+        .input("CANTIDAD_SUCURSAL", sql.NVarChar, CANTIDAD_SUCURSAL)
+        .query(updateProductStockSQL);
+
+      console.log(
+        `Stock de producto Actualizado - ID_PRODUCTO: ${foundProduct.recordset[0].ID_PRODUCTO}`
+      );
+
+      return updatedProductStock.rowsAffected[0];
+    }
+  } catch (error) {
+    console.log(
+      "Error en REPOSITORY - updateProductStockRepository - " + error
+    );
+    throw Error(
+      "Error en REPOSITORY - updateProductStockRepository - " + error
+    );
+  } finally {
+    pool.close();
+  }
+};
+
+const deleteStockByIdRepository = async (id) => {
+  const pool = await getConnectionSQL();
+  try {
+    const foundStock = await pool
+      .request()
+      .input("idStock", sql.Int, id)
+      .query(deleteProductStockByIdSQL);
+
+    console.log(`REPOSITORY - deleteStockByIdRepository id:${id}`);
+    return foundStock.recordset;
+  } catch (error) {
+    console.log("Error en REPOSITORY - deleteStockByIdRepository - " + error);
+    throw Error("Error en REPOSITORY - deleteStockByIdRepository - " + error);
+  } finally {
+    pool.close();
+  }
+};
+
+module.exports = {
+  getAllStockRepository,
+  createProductStockRepository,
+  updateProductStockRepository,
+  deleteStockByIdRepository,
 };
