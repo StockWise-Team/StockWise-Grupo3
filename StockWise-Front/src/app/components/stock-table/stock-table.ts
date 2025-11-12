@@ -9,4 +9,12 @@ import { Stock } from '@app/models/stock.model';
 })
 export class StockTable {
   @Input() StockList: Stock[] = [];
+
+  actualizarStock(id: number) {
+    console.log('actualizando stock de producto..', id);
+  }
+
+  eliminarStock(id: number) {
+    console.log('actualizando stock de producto..', id);
+  }
 }
