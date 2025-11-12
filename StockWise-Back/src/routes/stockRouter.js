@@ -1,9 +1,15 @@
 const express = require("express");
 const {
-  readStock
+  getAllStock,
+  updateProductStock,
+  deleteStockById,
+  createProductStock
 } = require("../controllers/stockController");
 const stockRouter = express();
 
-stockRouter.get("/", readStock);
+stockRouter.get("/", getAllStock);
+stockRouter.put("/:id", updateProductStock);
+stockRouter.delete("/:id", deleteStockById)
+stockRouter.post("/:id", createProductStock)
 
 module.exports = stockRouter;
