@@ -1,23 +1,33 @@
 const { getConnectionSQL } = require("../database/connection");
-const {
-  getAuthUser
-} = require("../database/queries");
+const { getAuthUser } = require("../database/queries");
 const sql = require("mssql");
+const bcrypt = require('bcryptjs');
 
 exports.authUserRepository = async (email, contra) => {
-  const pool = await getConnectionSQL();
-  try {
-    const result = await pool
-    .request()
-    .input("EMAIL", sql.VarChar, email)
-    .input("CONTRA", sql.VarChar, contra)
-    .query("SELECT * FROM USUARIOS WHERE MAIL = @EMAIL AND CONTRASEÑA = @CONTRA");
+  const pool = await getConnectionSQL();
+  try {
+    const result = await pool
+    .request()
+    .input("EMAIL", sql.VarChar, email)
+    .query(getAuthUser);
 
-    return result.recordset;
-  } catch (error) {
-    console.log("Error en REPOSITORY - getAllProductsRepository - " + error);
-    throw Error("Error en REPOSITORY - getAllProductsRepository - " + error);
-  } finally {
-    pool.close();
-  }
+    if (result.recordset.length === 0) {
+      return null;
+    }
+
+    const user = result.recordset[0];
+    const isMatch = await bcrypt.compare(contra, user.CONTRASEÑA);
+
+    if (!isMatch) {
+      return null;
+    }
+    
+    const { CONTRASEÑA, ...userData } = user;
+    return userData;
+
+  } catch (error) {
+    throw new Error("Error en authRepository: " + error.message);
+  } finally {
+    pool.close();
+  }
 };

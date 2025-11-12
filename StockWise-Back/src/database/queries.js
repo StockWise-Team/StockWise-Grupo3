@@ -41,8 +41,7 @@ module.exports = {
   createSaleSQL: `INSERT INTO VENTAS (ID_USUARIO, ID_PRODUCTO, CANTIDAD, PRECIO_UNITARIO, TOTAL, FECHA, NUMERO_VENTA) 
   VALUES (@idUsuario, @idProducto, @cantidad, @precioUnitario, @total, @fecha, @numeroVenta)`,
 
-  //--- Consultas para ventas
-  // Obtener ventas agrupadas
+  // Consultas para obtener ventas agrupadas
   getAllSalesSQL: `
     SELECT 
       v.ID_USUARIO,
@@ -90,7 +89,7 @@ module.exports = {
     ORDER BY v.FECHA DESC, v.ID DESC
   `,
 
-  // ---Consultas para gestión de caja
+  // Consultas para gestión de caja
   // Abrir nueva caja
   openCashSQL: `
     INSERT INTO CIERRE_CAJA (ID_EMPLEADO, FECHA_APERTURA) 
@@ -151,4 +150,21 @@ module.exports = {
     SET CANTIDAD_SUCURSAL = CANTIDAD_SUCURSAL - @cantidad 
     WHERE ID_PRODUCTO = @idProducto
   `,
+  // usuaarios queries
+  createNewUserSQL: `INSERT INTO USUARIOS (NOMBRE_COMPLETO, MAIL, CONTRASEÑA, ROL) 
+    VALUES (@nombre_completo, @mail, @contraseña, @rol)`,
+  
+  updateUserSQL: `UPDATE USUARIOS 
+    SET NOMBRE_COMPLETO = @nombre_completo, MAIL = @mail, ROL = @rol 
+    WHERE ID = @id`,
+
+  deleteUserSQL: 'DELETE FROM USUARIOS WHERE ID = @id',
+
+  getAllUsersSQL: 'SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS',
+
+  getUserByIdSQL: 'SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS WHERE ID = @id',
+
+  getPasswordHashSQL: 'SELECT CONTRASEÑA FROM USUARIOS WHERE ID = @id',
+  
+  changePasswordSQL: 'UPDATE USUARIOS SET CONTRASEÑA = @newPass WHERE ID = @id'
 };
