@@ -27,6 +27,18 @@ export class ProductApiService {
       PRECIO: product.PRECIO,
       ACTIVO: product.ACTIVO,
     };
-    return this._httpClient.put<IProduct[]>(`${this.apiURL}/${product.ID}`, data);
+    return this._httpClient.put<IProduct>(`${this.apiURL}/${product.ID}`, data);
+  }
+
+  createProductAPI(product: any) {
+    let newProduct = {
+      NOMBRE: product.NOMBRE,
+      CATEGORIA: product.CATEGORIA,
+      DESCRIPCION: product.DESCRIPCION,
+      PRECIO: product.PRECIO,
+      ACTIVO: product.ACTIVO,
+    };
+
+    return this._httpClient.post<any>(`${this.apiURL}`, newProduct);
   }
 }

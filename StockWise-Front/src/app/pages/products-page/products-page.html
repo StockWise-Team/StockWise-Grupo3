@@ -1,13 +1,17 @@
 <main class="min-h-screen bg-gray-50/50 flex flex-row ">
   <div class="p-1 flex flex-col w-full">
     <div class="mt-1">
-      <div class="p-1">
+      <div class="p-1 flex justify-between content-between">
         <h6 class="text-3xl">Productos</h6>
+        <button type="button" (click)="openModalNewProduct()"
+          class="w-1/4 focus:outline-none text-white hover:bg-green-800 focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900 px-8">
+          Crear Nuevo Producto
+        </button>
       </div>
       <div
         class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
-        <div class="p-6 overflow-x-scroll px-0 pt-0 pb-2">
-          <table class="w-full min-w-[640px] table-auto">
+        <div class="p-1 overflow-x-scroll px-0 pt-0 pb-1">
+          <table class="w-full table-auto">
             <thead>
               <tr>
                 <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
@@ -28,6 +32,16 @@
                 <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
                   <p class="block antialiased font-sans uppercase text-blue-gray-400">
                     CATEGORIA
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans uppercase text-blue-gray-400">
+                    PRECIO
+                  </p>
+                </th>
+                <th class="border-b border-blue-gray-50 py-3 px-6 text-left">
+                  <p class="block antialiased font-sans uppercase text-blue-gray-400">
+                    ESTADO
                   </p>
                 </th>
                 <th class="border-blue-gray-50 py-3 px-6 text-left">
@@ -54,7 +68,21 @@
                 <td class="py-3 px-5 border-b border-blue-gray-50">
                   <div class="w-10/12">
                     <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
+                      {{product.DESCRIPCION}}
+                    </p>
+                  </div>
+                </td>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <div class="w-10/12">
+                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
                       {{product.CATEGORIA}}
+                    </p>
+                  </div>
+                </td>
+                <td class="py-3 px-5 border-b border-blue-gray-50">
+                  <div class="w-10/12">
+                    <p class="antialiased font-sans mb-1 block font-medium text-blue-gray-600">
+                      {{product.PRECIO}}
                     </p>
                   </div>
                 </td>
@@ -115,5 +143,6 @@
 
   <app-modal-details [isVisible]="showModalDetail" (close)="closeModalDetail()" [detailProduct]="producDetail" />
   <app-modal-edit [isVisible]="showModalEdit" (close)="recargarDatosPadre($event)" [detailProduct]="producDetail" />
+  <app-modal-new-product [isVisible]="showModalNewProduct" (close)="recargarDatosPadreNewProduct($event)" />
 
 </main>

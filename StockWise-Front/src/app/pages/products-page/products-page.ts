@@ -4,10 +4,11 @@ import { ProductApiService } from './services/products.service';
 import { ModalDetails } from './modals/modal-details/modal-details';
 import { ModalEdit } from './modals/modal-edit/modal-edit';
 import { CommonModule } from '@angular/common';
+import { ModalNewProduct } from './modals/modal-new-product/modal-new-product';
 
 @Component({
   selector: 'app-products-page',
-  imports: [ModalDetails, ModalEdit, CommonModule],
+  imports: [ModalDetails, ModalEdit, CommonModule, ModalNewProduct],
   templateUrl: './products-page.html',
   styleUrl: './products-page.css',
 })
@@ -16,6 +17,7 @@ export class ProductsPage {
   showModalDetail: boolean = false;
   showModalConfirm: boolean = false;
   showModalEdit: boolean = false;
+  showModalNewProduct: boolean = false;
   producDetail: IProduct = {
     ID: 0,
     NOMBRE: '',
@@ -75,6 +77,23 @@ export class ProductsPage {
 
   recargarDatosPadre(exito: boolean): void {
     this.showModalEdit = false; // Oculta el componente modal
+
+    if (exito) {
+      // Actualizacion de la tabla con los datos nuevos
+      this.getAllProducts();
+    }
+  }
+
+  openModalNewProduct(): void {
+    this.showModalNewProduct = true;
+  }
+
+  closeModalNewProduct(): void {
+    this.showModalNewProduct = false;
+  }
+
+  recargarDatosPadreNewProduct(exito: boolean): void {
+    this.showModalNewProduct = false; // Oculta el componente modal
 
     if (exito) {
       // Actualizacion de la tabla con los datos nuevos
