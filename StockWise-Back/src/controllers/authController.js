@@ -5,13 +5,13 @@ const JWT_SECRET = 'prueba123';
 
 exports.authUsers = async (req, res) => {
   try {
-    const { mail, contra } = req.body; 
+    const { email, contra } = req.body; 
 
-    if (!mail || !contra) {
-      return res.status(400).json({ message: "Mail y contraseña requeridos" });
+    if (!email || !contra) {
+      return res.status(400).json({ message: "email y contraseña requeridos" });
     }
 
-    const user = await authUsersService(mail, contra); 
+    const user = await authUsersService(email, contra); 
     
     if (!user) {
       return res.status(401).json({ message: "Credenciales incorrectas" });

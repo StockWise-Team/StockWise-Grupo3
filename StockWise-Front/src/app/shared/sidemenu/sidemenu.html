@@ -10,7 +10,7 @@
       </h6>
       <br />
       <h3 class="font-extrabold uppercase text-white">
-        @if (role === Roles.ADMIN) { Admin } @else { Employee }
+        @if (role === Role.ADMIN) { Admin } @else { Employee }
       </h3>
     </a>
     <button
@@ -35,7 +35,7 @@
           </button>
         </a>
       </li>
-      @if (role === Roles.EMPLOYEE) {
+      @if (role === Role.EMPLOYEE) {
       <li>
         <a
           routerLink="/employee/sales"
@@ -91,7 +91,7 @@
         </li>
       }
 
-      @if (role === Roles.ADMIN) {
+      @if (role === Role.ADMIN) {
       <li>
         <a routerLink="/admin/stock" routerLinkActive="active">
           <button
@@ -143,7 +143,7 @@
       }
     </ul>
     <ul class="">
-      @if (role === Roles.EMPLOYEE) {
+      @if (role === Role.EMPLOYEE) {
         <div class="border-t border-white/20">
           <div class="flex items-center gap-2">
             <button

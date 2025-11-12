@@ -1,0 +1,7 @@
+@if(stockList$ | async; as stockList) {
+<app-stock-table [StockList]="stockList" />
+} @else{
+<p>No hay lista de stock</p>
+}
+
+

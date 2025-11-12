@@ -1,5 +1,5 @@
 module.exports = {
-
+  //--- Consultas para productos
   // Consulta para obtener todos los productos con su stock en sucursal
   getAllProductSQL: `
     SELECT 
@@ -14,7 +14,7 @@ module.exports = {
     FROM PRODUCTOS p
     LEFT JOIN STOCK s ON p.ID = s.ID_PRODUCTO
   `,
-  
+
   // Consulta para obtener productos con stock disponible en sucursal (para ventas)
   getProductsWithStockSQL: `
     SELECT 
@@ -29,7 +29,7 @@ module.exports = {
     WHERE COALESCE(s.CANTIDAD_SUCURSAL, 0) > 0
       AND p.ACTIVE = 1
   `,
-  
+
   getProductByIdSQL: `SELECT * FROM Productos WHERE ID = @ID`,
   deleteProductSQL: `UPDATE Productos SET ACTIVO = 0 WHERE ID = @ID`,
   createProductSQL: `INSERT INTO PRODUCTOS (NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO) 
@@ -38,10 +38,9 @@ module.exports = {
   SET NOMBRE = @NOMBRE, DESCRIPCION = @DESCRIPCION, CATEGORIA = @CATEGORIA, PRECIO = @PRECIO, ACTIVO = @ACTIVO
   WHERE ID = @ID`,
   getAuthUser: "SELECT * FROM USUARIOS WHERE MAIL = @EMAIL",
-  getAllStock: "SELECT * FROM STOCK",
   createSaleSQL: `INSERT INTO VENTAS (ID_USUARIO, ID_PRODUCTO, CANTIDAD, PRECIO_UNITARIO, TOTAL, FECHA, NUMERO_VENTA) 
   VALUES (@idUsuario, @idProducto, @cantidad, @precioUnitario, @total, @fecha, @numeroVenta)`,
-  
+
   // Consultas para obtener ventas agrupadas
   getAllSalesSQL: `
     SELECT 
@@ -59,7 +58,7 @@ module.exports = {
     LEFT JOIN USUARIOS u ON v.ID_USUARIO = u.ID
     ORDER BY v.FECHA DESC, v.ID_USUARIO
   `,
-  
+
   // Consulta para ventas de la caja abierta actual
   getTodaySalesSQL: `
     SELECT 
@@ -133,8 +132,11 @@ module.exports = {
     LEFT JOIN USUARIOS u ON cc.ID_EMPLEADO = u.ID
     ORDER BY cc.FECHA_APERTURA DESC
   `,
+  //--- Consultas para manejo de stock
 
-  // Consultas para manejo de stock
+  // Obtener todo los registros de stock
+  getAllStock: "SELECT * FROM STOCK",
+
   // Obtener stock actual de un producto
   getProductStockSQL: `
     SELECT CANTIDAD_SUCURSAL, CANTIDAD_DEPOSITO 

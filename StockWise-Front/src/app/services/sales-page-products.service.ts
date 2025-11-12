@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ProductDB } from '../models/product.model';
+import { ProductDB } from '../models/productDB.model';
 
 @Injectable({ providedIn: 'root' })
 export class SalesPageProductsService {
