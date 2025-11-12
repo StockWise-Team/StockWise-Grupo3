@@ -147,5 +147,22 @@ module.exports = {
     UPDATE STOCK 
     SET CANTIDAD_SUCURSAL = CANTIDAD_SUCURSAL - @cantidad 
     WHERE ID_PRODUCTO = @idProducto
-  `
+  `,
+  // usuaarios queries
+  createNewUserSQL: `INSERT INTO USUARIOS (NOMBRE_COMPLETO, MAIL, CONTRASEÑA, ROL) 
+    VALUES (@nombre_completo, @mail, @contraseña, @rol)`,
+  
+  updateUserSQL: `UPDATE USUARIOS 
+    SET NOMBRE_COMPLETO = @nombre_completo, MAIL = @mail, ROL = @rol 
+    WHERE ID = @id`,
+
+  deleteUserSQL: 'DELETE FROM USUARIOS WHERE ID = @id',
+
+  getAllUsersSQL: 'SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS',
+
+  getUserByIdSQL: 'SELECT ID, NOMBRE_COMPLETO, MAIL, ROL FROM USUARIOS WHERE ID = @id',
+
+  getPasswordHashSQL: 'SELECT CONTRASEÑA FROM USUARIOS WHERE ID = @id',
+  
+  changePasswordSQL: 'UPDATE USUARIOS SET CONTRASEÑA = @newPass WHERE ID = @id'
 };
