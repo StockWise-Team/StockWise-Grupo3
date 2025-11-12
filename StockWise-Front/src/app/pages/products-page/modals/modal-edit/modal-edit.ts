@@ -26,33 +26,40 @@ export class ModalEdit {
   constructor(private _apiProducts: ProductApiService, private cdRef: ChangeDetectorRef) {}
 
   updateProduct() {
-    const updatedProduct: IProduct = {
-      ID: this.detailProduct?.ID ?? 0,
-      NOMBRE: this.nombre == '' ? this.detailProduct?.NOMBRE ?? '' : this.nombre.toUpperCase(),
-      CATEGORIA:
-        this.categoria == '' ? this.detailProduct?.CATEGORIA ?? '' : this.categoria.toUpperCase(),
-      DESCRIPCION:
-        this.descripcion == ''
-          ? this.detailProduct?.DESCRIPCION ?? ''
-          : this.descripcion.toUpperCase(),
-      PRECIO: this.precio == null ? this.detailProduct?.PRECIO ?? 0 : this.precio,
-      ACTIVE: this.detailProduct?.ACTIVE ?? true,
-    };
+    if (this.detailProduct != undefined) {
+      const updatedProduct: IProduct = {
+        ID: this.detailProduct.ID,
+        NOMBRE:
+          this.nombre == '' || this.nombre == null
+            ? this.detailProduct.NOMBRE.toLocaleUpperCase()
+            : this.nombre.toUpperCase(),
+        CATEGORIA:
+          this.categoria == '' || this.nombre == null
+            ? this.detailProduct.CATEGORIA?.toUpperCase() ?? ''
+            : this.categoria.toUpperCase(),
+        DESCRIPCION:
+          this.descripcion == '' || this.nombre == null
+            ? this.detailProduct?.DESCRIPCION?.toUpperCase() ?? ''
+            : this.descripcion.toUpperCase(),
+        PRECIO: this.precio == null ? this.detailProduct.PRECIO : this.precio,
+        ACTIVE: this.detailProduct.ACTIVE,
+      };
 
-    this._apiProducts.udpateProductAPI(updatedProduct).subscribe({
-      next: (data) => {
-        this.nombre = '';
-        this.categoria = '';
-        this.descripcion = '';
-        this.precio = 0;
+      this._apiProducts.udpateProductAPI(updatedProduct).subscribe({
+        next: (data) => {
+          this.nombre = '';
+          this.categoria = '';
+          this.descripcion = '';
+          this.precio = 0;
 
-        this.close.emit(true);
-        this.isVisible = false;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+          this.close.emit(true);
+          this.isVisible = false;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
   }
 
   /**
@@ -63,7 +70,7 @@ export class ModalEdit {
     this.categoria = '';
     this.descripcion = '';
     this.precio = 0;
-    
+
     this.isVisible = false;
     this.close.emit(true);
   }

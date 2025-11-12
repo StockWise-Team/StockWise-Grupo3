@@ -6,6 +6,8 @@ import { ModalEdit } from './modals/modal-edit/modal-edit';
 import { CommonModule } from '@angular/common';
 import { ModalNewProduct } from './modals/modal-new-product/modal-new-product';
 import { ProductDB } from '@app/models/productDB.model';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-products-page',
@@ -15,10 +17,13 @@ import { ProductDB } from '@app/models/productDB.model';
 })
 export class ProductsPage {
   productsList: ProductDB[] = [];
+  //Estados para mostrar/ocultar los diferentes modals
   showModalDetail: boolean = false;
   showModalConfirm: boolean = false;
   showModalEdit: boolean = false;
   showModalNewProduct: boolean = false;
+  // Control para el input search
+  searchControl = new FormControl('');
   producDetail: ProductDB = {
     ID: 0,
     NOMBRE: '',
@@ -28,19 +33,31 @@ export class ProductsPage {
     ACTIVE: false,
   };
 
+  //Lista que se mostrará y actualizará
+  itemsFiltrados: ProductDB[] = [...this.productsList];
+
   constructor(private _apiProducts: ProductApiService, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getAllProducts();
+
+    // Escuchar los cambios del input de búsqueda
+    this.searchControl.valueChanges
+      .pipe(
+        // Solo emite si el valor actual es diferente al último valor emitido
+        distinctUntilChanged()
+      )
+      .subscribe((searchTerm) => {
+        // Llamar a la función de filtrado cada vez que cambie el valor
+        this.filterItems(searchTerm || ''); // Usa cadena vacía si es nulo
+      });
   }
 
   getAllProducts() {
     this._apiProducts.getAllProductsAPI().subscribe({
       next: (data) => {
         this.productsList = data;
-
-        console.log(data);
-
+        this.itemsFiltrados = [...this.productsList];
         this.cdRef.detectChanges();
       },
       error: (error) => {
@@ -61,11 +78,7 @@ export class ProductsPage {
   updateStatusProduct(id: number): void {
     this._apiProducts.updateProductStatusAPI(id).subscribe({
       next: (data) => {
-        console.log(data);
-        let dataProduct = this.getAllProducts();
-        //console.log(dataProduct);
-
-        //this.getAllProducts();
+        this.getAllProducts();
       },
       error: (error) => {
         console.log(error);
@@ -106,5 +119,24 @@ export class ProductsPage {
       // Actualizacion de la tabla con los datos nuevos
       this.getAllProducts();
     }
+  }
+
+  filterItems(termino: string): void {
+    const termUpperCase = termino.toUpperCase();
+    console.log(termUpperCase);
+
+    if (!termUpperCase) {
+      // Si el término está vacío, muestra la lista original completa
+      this.itemsFiltrados = [...this.productsList];
+      console.log(this.itemsFiltrados);
+      return;
+    }
+
+    // Filtra la lista original
+    this.itemsFiltrados = this.productsList.filter((item) =>
+      item.NOMBRE.toLocaleUpperCase().includes(termUpperCase)
+    );
+
+    console.log(this.itemsFiltrados);
   }
 }
