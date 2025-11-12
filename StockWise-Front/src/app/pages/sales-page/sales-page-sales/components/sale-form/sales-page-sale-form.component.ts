@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
-import { SalesPageSalesService } from '../../services/sales-page-sales.service';
-import { Product, SaleItem } from '../../models/product.model';
-import { CashService } from '../../../../../shared/services/cash.service';
+import { Product, SaleItem } from '../../../../../models/product.model';
+import { CashService } from '../../../../../services/cash.service';
+import { SalesPageSalesService } from '@app/services';
 
 @Component({
   selector: 'sales-page-sale-form',
@@ -97,7 +97,7 @@ export class SalesPageSaleFormComponent implements OnInit {
   }
 
   onCancelSale() {
-    this.router.navigate(['/sales-page/sales']);
+    this.router.navigate(['/employee/sales']);
   }
 
   onFinishSale() {
@@ -111,11 +111,11 @@ export class SalesPageSaleFormComponent implements OnInit {
     this.salesSvc.createOngoingSale(this.items).subscribe({
       next: (response) => {
         console.log('Venta creada exitosamente:', response);
-        this.router.navigate(['/sales-page/sales']);
+        this.router.navigate(['/employee/sales']);
       },
       error: (err) => {
         console.error('Error al registrar la venta:', err);
-        this.router.navigate(['/sales-page/sales']);
+        this.router.navigate(['/employee/sales']);
       }
     });
   }

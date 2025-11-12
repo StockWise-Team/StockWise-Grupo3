@@ -1,12 +1,13 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgIf, CurrencyPipe } from '@angular/common';
-import { CashService, CashStatus } from '../../../../../shared/services/cash.service';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CashService } from '@app/services/cash.service';
+import { CashStatus } from '@app/models/cash.model';
 
 @Component({
   selector: 'sales-page-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, NgIf, CurrencyPipe],
+  imports: [RouterLink, RouterLinkActive, CommonModule, CurrencyPipe],
   templateUrl: './sales-page-sidebar.component.html',
   styleUrl: './sales-page-sidebar.component.css',
 })

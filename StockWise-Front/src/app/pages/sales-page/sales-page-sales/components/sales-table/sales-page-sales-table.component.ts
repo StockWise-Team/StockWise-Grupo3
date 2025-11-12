@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule, CurrencyPipe} from '@angular/common';
 import { Router } from '@angular/router';
-import { SalesPageSalesService } from '../../services/sales-page-sales.service';
-import { CashService } from '../../../../../shared/services/cash.service';
-import { GroupedSale } from '../../models/sales.model';
+import { SalesPageSalesService } from '@app/services';
+import { GroupedSale } from '@app/models/sales.model';
+import { CashService } from '@app/services/cash.service';
 
 @Component({
   selector: 'sales-page-sales-table',
   standalone: true,
-  imports: [NgFor, NgIf, CurrencyPipe],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './sales-page-sales-table.component.html',
   styleUrl: './sales-page-sales-table.component.css'
 })
@@ -108,7 +108,7 @@ export class SalesPageSalesTableComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.router.navigate(['/sales-page/sales/new']);
+    this.router.navigate(['/employee/sales/new']);
   }
 
   toggleSaleExpansion(saleId: string) {

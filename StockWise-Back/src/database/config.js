@@ -8,8 +8,11 @@ const configDB = {
   server: process.env.SERVER_NAME_LOCAL,
   database: process.env.NAME_DB_LOCAL,
   port: parseInt(process.env.PORT_DB_LOCAL),
+  dialect: "mssql",
   options: {
+    encrypt: false,
     trustServerCertificate: true,
+    trustedConnection: true,  
     encrypt: false, // Para desarrollo local
     enableArithAbort: true,
   },
