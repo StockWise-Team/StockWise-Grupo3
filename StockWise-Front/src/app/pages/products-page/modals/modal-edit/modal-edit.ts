@@ -34,7 +34,7 @@ export class ModalEdit {
             ? this.detailProduct.NOMBRE.toLocaleUpperCase()
             : this.nombre.toUpperCase(),
         CATEGORIA:
-          this.categoria == '' || this.nombre == null
+          this.categoria == ''
             ? this.detailProduct.CATEGORIA?.toUpperCase() ?? ''
             : this.categoria.toUpperCase(),
         DESCRIPCION:
