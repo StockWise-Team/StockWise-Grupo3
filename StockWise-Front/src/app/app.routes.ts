@@ -33,35 +33,53 @@ import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
 // export class HomeComponent {}
 
 export const routes: Routes = [
-    { path: '', component: Login }, 
-    {
-        path: 'admin',
-        component: AdminLayout,
-        children: [
-          {
-            path: 'home',
-            component: HomePage
-          }
-        ]
-    },
-    {
-      path:'employee',
-      component: EmployeeLayout,
-      children:[
-        {
-          path: 'home',
-          component: HomePage
-        }
-      ]
-    },
-    {
-        path: 'sales-page',
-        component: SalesPageLayoutComponent,
-        children: [
-            { path: '', redirectTo: 'sales', pathMatch: 'full' },
-            { path: 'sales', component: SalesPageSalesTableComponent },
-            { path: 'sales/new', component: SalesPageSaleFormComponent },
-            { path: 'products', component: SalesPageProductsTableComponent },
-        ],
-    },
+  { path: '', component: Login },
+  {
+    path: 'admin',
+    component: AdminLayout,
+    children: [
+      {
+        path: 'home',
+        component: HomePage,
+      },
+      {
+        path: 'sales',
+        component: HomePage,
+      },
+      {
+        path: 'products',
+        component: HomePage,
+      },
+      {
+        path: 'stock',
+        component: HomePage,
+      },
+      {
+        path: 'users',
+        component: HomePage,
+      },
+      {
+        path: 'cash-register',
+        component: HomePage,
+      },
+    ],
+  },
+  {
+    path: 'employee',
+    component: EmployeeLayout,
+    children: [
+      {
+        path: 'home',
+        component: HomePage,
+      },
+      { path: 'sales', component: SalesPageSalesTableComponent },
+      { path: 'sales/new', component: SalesPageSaleFormComponent },
+      { path: 'products', component: SalesPageProductsTableComponent },
+    ],
+  },
+  {
+    path: 'sales-page',
+    component: SalesPageLayoutComponent,
+    children: [{ path: '', redirectTo: 'sales', pathMatch: 'full' }],
+  },
 ];

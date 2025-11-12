@@ -97,7 +97,7 @@ export class SalesPageSaleFormComponent implements OnInit {
   }
 
   onCancelSale() {
-    this.router.navigate(['/sales-page/sales']);
+    this.router.navigate(['/employee/sales']);
   }
 
   onFinishSale() {
@@ -111,11 +111,11 @@ export class SalesPageSaleFormComponent implements OnInit {
     this.salesSvc.createOngoingSale(this.items).subscribe({
       next: (response) => {
         console.log('Venta creada exitosamente:', response);
-        this.router.navigate(['/sales-page/sales']);
+        this.router.navigate(['/employee/sales']);
       },
       error: (err) => {
         console.error('Error al registrar la venta:', err);
-        this.router.navigate(['/sales-page/sales']);
+        this.router.navigate(['/employee/sales']);
       }
     });
   }

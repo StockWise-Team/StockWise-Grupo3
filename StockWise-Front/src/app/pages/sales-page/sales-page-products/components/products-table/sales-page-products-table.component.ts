@@ -1,12 +1,12 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SalesPageProductsService } from '../../services/sales-page-products.service';
 
 @Component({
   selector: 'sales-page-products-table',
   standalone: true,
-  imports: [NgFor, NgIf, CurrencyPipe, FormsModule],
+  imports: [CurrencyPipe, FormsModule, CommonModule],
   templateUrl: './sales-page-products-table.component.html',
   styleUrl: './sales-page-products-table.component.css',
 })

@@ -21,7 +21,7 @@ export class Login {
   }
 
 
- async testean2(){
+ async authenticateUser(){
   try {
     const body ={
       email: this.usuario,
