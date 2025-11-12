@@ -1,6 +1,6 @@
 export interface Stock {
-  id: number;
-  id_producto: number;
-  cantidad_deposito: number;
-  cantidad_sucursal: number;
+  ID: number;
+  ID_PRODUCTO: number;
+  CANTIDAD_DEPOSITO: number;
+  CANTIDAD_SUCURSAL: number;
 }
