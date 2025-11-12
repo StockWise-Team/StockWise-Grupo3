@@ -3,7 +3,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Roles } from '../../enums/rolesEnum';
 import { BoxIcon, CartIcon, HouseIcon, TableIcon, BellIcon, ProfileIcon, CrossIcon, AddUserIcon, GetInIcon } from '../../icons';
 import { CommonModule } from '@angular/common';
-import { CashService, CashStatus } from '../../services/cash.service';
+import { CashService } from '../../services/cash.service';
+import { CashStatus } from '@app/models/cash.model';
 
 @Component({
   selector: 'app-sidemenu',

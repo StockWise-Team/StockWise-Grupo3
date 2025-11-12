@@ -1,37 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CashHistory, CashOperation, CashStatus } from '@app/models/cash.model';
 
-export interface CashStatus {
-  success: boolean;
-  cashOpen: boolean;
-  message?: string;
-  data?: {
-    id: number;
-    fechaApertura: string;
-    idEmpleado: number;
-    totalVentas: number;
-    cantidadVentas: number;
-  };
-}
 
-export interface CashOperation {
-  success: boolean;
-  message: string;
-  data?: any;
-}
-
-export interface CashHistory {
-  success: boolean;
-  data: Array<{
-    ID: number;
-    FECHA_APERTURA: string;
-    FECHA_CIERRE?: string;
-    MONTO_FINAL?: number;
-    ID_EMPLEADO: number;
-    EMPLEADO_NOMBRE?: string;
-  }>;
-}
 
 @Injectable({ providedIn: 'root' })
 export class CashService {
