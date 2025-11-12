@@ -80,12 +80,14 @@
       <td
         class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static"
       >
-        <span
-          class="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase"
-          >Actions</span
-        >
-        <a href="#" class="text-white bg-primary-600 p-2 ml-1 rounded-2xl hover:bg-primary-500">Edit</a>
-        <a href="#" class="text-white bg-primary-600 p-2 ml-1 rounded-2xl hover:bg-primary-500">Remove</a>
+        <button (click)="actualizarStock(item.ID)" class="border-0 py-1 px-3 mr-4 rounded-md text-white bg-orange-400 hover:bg-orange-300">
+            Actualizar stock
+          </button>
+
+          <button (click)="eliminarStock(item.ID)" class="border-0 py-1 px-3 rounded-md text-white bg-red-400 hover:bg-red-300">
+            EliminarStock
+          </button>
+        
       </td>
     </tr>
     }
