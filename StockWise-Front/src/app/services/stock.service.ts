@@ -21,4 +21,9 @@ export class StockService {
     console.log('Trayendo el stock de la base...');
     return this.http.get<Stock[]>(`${this.apiUrl}/stock`);
   }
+
+  deleteProductStock(id: number): Observable<Stock>{
+    console.log('Eliminando registro de stock de id:', id);
+    return this.http.delete<Stock>(`${this.apiUrl}/stock/${id}`);
+  }
 }

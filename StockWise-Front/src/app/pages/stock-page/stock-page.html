@@ -1,5 +1,5 @@
 @if(stockList$ | async; as stockList) {
-<app-stock-table [StockList]="stockList" />
+<app-stock-table [StockList]="stockList" (productStockDeleted)="reloadStockList()"/>
 } @else{
 <p>No hay lista de stock</p>
 }

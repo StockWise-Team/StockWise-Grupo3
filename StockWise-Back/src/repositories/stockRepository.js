@@ -1,5 +1,11 @@
 const { getConnectionSQL } = require("../database/connection");
-const { getAllStock, updateProductStockSQL, createProductStockSQL } = require("../database/queries");
+const {
+  getAllStock,
+  getProductStockByIdSQL,
+  updateProductStockSQL,
+  createProductStockSQL,
+  deleteProductStockByIdSQL,
+} = require("../database/queries");
 const sql = require("mssql");
 
 const getAllStockRepository = async () => {
@@ -18,10 +24,12 @@ const getAllStockRepository = async () => {
 };
 
 const createProductStockRepository = async (stockInfo) => {
-  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL} = stockInfo;
+  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL } = stockInfo;
   const pool = await getConnectionSQL();
   try {
-     console.log(`REPOSITORY - createProductStockRepository producto:${stockInfo}`);
+    console.log(
+      `REPOSITORY - createProductStockRepository producto:${stockInfo}`
+    );
 
     await pool
       .request()
@@ -32,12 +40,16 @@ const createProductStockRepository = async (stockInfo) => {
 
     return stockInfo;
   } catch (error) {
-    console.log("Error en REPOSITORY - createProductStockRepository - " + error);
-    throw Error("Error en REPOSITORY - createProductStockRepository - " + error);
-  }finally {
+    console.log(
+      "Error en REPOSITORY - createProductStockRepository - " + error
+    );
+    throw Error(
+      "Error en REPOSITORY - createProductStockRepository - " + error
+    );
+  } finally {
     pool.close();
   }
-}
+};
 
 const updateProductStockRepository = async (id, productStock) => {
   const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL } = productStock;
@@ -87,10 +99,30 @@ const deleteStockByIdRepository = async (id) => {
     const foundStock = await pool
       .request()
       .input("idStock", sql.Int, id)
-      .query(deleteProductStockByIdSQL);
+      .query(getProductStockByIdSQL);
+
+    if (foundStock.recordset.length === 0) {
+      console.log("Registro de stock no encontrado");
+      return;
+    }
+    const {CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL} = foundStock.recordset[0];
+    if(CANTIDAD_DEPOSITO === 0 && CANTIDAD_SUCURSAL === 0){
+      console.log(`El producto de id ${id} ya tiene el stock borrado.`)
+      return;
+    }
 
     console.log(`REPOSITORY - deleteStockByIdRepository id:${id}`);
-    return foundStock.recordset;
+
+    const deletedStock = await pool
+      .request()
+      .input("idStock", sql.Int, id)
+      .query(deleteProductStockByIdSQL);
+
+    console.log(
+      `Stock de producto eliminado - ID: ${foundStock.recordset[0].ID}`
+    );
+
+    return deletedStock.rowsAffected[0] ? foundStock.recordset[0] : 0;
   } catch (error) {
     console.log("Error en REPOSITORY - deleteStockByIdRepository - " + error);
     throw Error("Error en REPOSITORY - deleteStockByIdRepository - " + error);
