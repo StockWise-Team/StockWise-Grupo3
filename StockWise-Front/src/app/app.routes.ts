@@ -10,6 +10,7 @@ import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
 import { StockPage } from './pages/stock-page/stock-page';
 import { RegisterClosingsPage } from './pages/register-closings-page/register-closings-page';
+import { ProductsPage } from './pages/products-page/products-page';
 
 export const routes: Routes = [
   { path: '', component: Login },
@@ -27,7 +28,7 @@ export const routes: Routes = [
       },
       {
         path: 'products',
-        component: HomePage,
+        component: ProductsPage,
       },
       {
         path: 'stock',

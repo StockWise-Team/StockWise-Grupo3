@@ -4,5 +4,5 @@ export interface IProduct {
   DESCRIPCION: string;
   CATEGORIA: string;
   PRECIO: number;
-  ACTIVO: boolean
+  ACTIVE: boolean
 }

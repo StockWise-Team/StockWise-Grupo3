@@ -31,7 +31,7 @@ export class ModalNewProduct {
         CATEGORIA: this.categoria.toUpperCase(),
         DESCRIPCION: this.descripcion.toUpperCase(),
         PRECIO: this.precio == null ? (this.precio = 0) : this.precio,
-        ACTIVO: true,
+        ACTIVE: true,
       };
 
       this._apiProducts.createProductAPI(createdProduct).subscribe({

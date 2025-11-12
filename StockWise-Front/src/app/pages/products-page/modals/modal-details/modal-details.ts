@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IProduct } from '../../models/products.model';
+import { ProductDB } from '@app/models/productDB.model';
 
 @Component({
   selector: 'app-modal-details',
@@ -13,7 +13,7 @@ export class ModalDetails {
   @Input() isVisible: boolean = false;
   // Output para notificar al componente padre que se debe cerrar
   @Output() close = new EventEmitter<void>();
-  @Input() detailProduct: IProduct | undefined;
+  @Input() detailProduct: ProductDB | undefined;
 
   /**
    * Cierra el modal y emite el evento 'close'.

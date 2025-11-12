@@ -75,13 +75,13 @@ exports.deleteProductRepository = async (id) => {
     if (foundProduct.recordset.length == 0) {
       console.log("Producto no encontrado");
     } else {
-      if (foundProduct.recordset[0].ACTIVO) {
+      if (foundProduct.recordset[0].ACTIVE) {
         result = await pool
           .request()
           .input("id", sql.Int, id)
           .query(deleteProductSQL);
       }
-      if (!foundProduct.recordset[0].ACTIVO) {
+      if (!foundProduct.recordset[0].ACTIVE) {
         result = await pool
           .request()
           .input("id", sql.Int, id)
@@ -103,7 +103,7 @@ exports.deleteProductRepository = async (id) => {
 };
 
 exports.createProductRepository = async (product) => {
-  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO } = product;
+  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVE } = product;
   const pool = await getConnectionSQL();
   try {
     console.log(`REPOSITORY - createProductRepository producto:${product}`);
@@ -114,7 +114,7 @@ exports.createProductRepository = async (product) => {
       .input("DESCRIPCION", sql.NVarChar, DESCRIPCION)
       .input("CATEGORIA", sql.NVarChar, CATEGORIA)
       .input("PRECIO", sql.Decimal, PRECIO)
-      .input("ACTIVO", sql.Bit, ACTIVO)
+      .input("ACTIVE", sql.Bit, ACTIVE)
       .query(createProductSQL);
 
     return product;
@@ -127,7 +127,7 @@ exports.createProductRepository = async (product) => {
 };
 
 exports.updateProductRepository = async (id, product) => {
-  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO } = product;
+  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVE } = product;
   const pool = await getConnectionSQL();
   try {
     console.log(
@@ -149,7 +149,7 @@ exports.updateProductRepository = async (id, product) => {
         .input("DESCRIPCION", sql.NVarChar, DESCRIPCION)
         .input("CATEGORIA", sql.NVarChar, CATEGORIA)
         .input("PRECIO", sql.Decimal, PRECIO)
-        .input("ACTIVO", sql.Bit, ACTIVO)
+        .input("ACTIVE", sql.Bit, ACTIVE)
         .query(updateProductSQL);
 
       console.log(

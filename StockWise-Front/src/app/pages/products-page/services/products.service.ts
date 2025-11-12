@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProduct } from '../models/products.model';
+import { ProductDB } from '@app/models/productDB.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,23 +11,23 @@ export class ProductApiService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  getAllProductsAPI(): Observable<IProduct[]> {
-    return this._httpClient.get<IProduct[]>(this.apiURL);
+  getAllProductsAPI(): Observable<ProductDB[]> {
+    return this._httpClient.get<ProductDB[]>(this.apiURL);
   }
 
   updateProductStatusAPI(id: number) {
-    return this._httpClient.delete<IProduct[]>(`${this.apiURL}/${id}`);
+    return this._httpClient.delete<ProductDB[]>(`${this.apiURL}/${id}`);
   }
 
-  udpateProductAPI(product: IProduct) {
+  udpateProductAPI(product: ProductDB) {
     let data = {
       NOMBRE: product.NOMBRE,
       CATEGORIA: product.CATEGORIA,
       DESCRIPCION: product.DESCRIPCION,
       PRECIO: product.PRECIO,
-      ACTIVO: product.ACTIVO,
+      ACTIVE: product.ACTIVE,
     };
-    return this._httpClient.put<IProduct>(`${this.apiURL}/${product.ID}`, data);
+    return this._httpClient.put<ProductDB>(`${this.apiURL}/${product.ID}`, data);
   }
 
   createProductAPI(product: any) {
@@ -36,7 +36,7 @@ export class ProductApiService {
       CATEGORIA: product.CATEGORIA,
       DESCRIPCION: product.DESCRIPCION,
       PRECIO: product.PRECIO,
-      ACTIVO: product.ACTIVO,
+      ACTIVE: product.ACTIVE,
     };
 
     return this._httpClient.post<any>(`${this.apiURL}`, newProduct);

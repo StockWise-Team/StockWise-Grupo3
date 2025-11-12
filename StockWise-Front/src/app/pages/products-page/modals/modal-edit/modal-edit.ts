@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { IProduct } from '../../models/products.model';
 import { FormsModule } from '@angular/forms';
 import { ProductApiService } from '../../services/products.service';
+import { ProductDB } from '@app/models/productDB.model';
 
 @Component({
   selector: 'app-modal-edit',
@@ -15,7 +16,7 @@ export class ModalEdit {
   @Input() isVisible: boolean = true;
   // Output para notificar al componente padre que se debe cerrar
   @Output() close = new EventEmitter<boolean>();
-  @Input() detailProduct: IProduct | undefined;
+  @Input() detailProduct: ProductDB | undefined;
 
   nombre: string = '';
   categoria: string = '';
@@ -35,7 +36,7 @@ export class ModalEdit {
           ? this.detailProduct?.DESCRIPCION ?? ''
           : this.descripcion.toUpperCase(),
       PRECIO: this.precio == null ? this.detailProduct?.PRECIO ?? 0 : this.precio,
-      ACTIVO: this.detailProduct?.ACTIVO ?? true,
+      ACTIVE: this.detailProduct?.ACTIVE ?? true,
     };
 
     this._apiProducts.udpateProductAPI(updatedProduct).subscribe({

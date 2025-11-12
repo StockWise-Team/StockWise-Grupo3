@@ -5,6 +5,7 @@ import { ModalDetails } from './modals/modal-details/modal-details';
 import { ModalEdit } from './modals/modal-edit/modal-edit';
 import { CommonModule } from '@angular/common';
 import { ModalNewProduct } from './modals/modal-new-product/modal-new-product';
+import { ProductDB } from '@app/models/productDB.model';
 
 @Component({
   selector: 'app-products-page',
@@ -13,18 +14,18 @@ import { ModalNewProduct } from './modals/modal-new-product/modal-new-product';
   styleUrl: './products-page.css',
 })
 export class ProductsPage {
-  productsList: IProduct[] = [];
+  productsList: ProductDB[] = [];
   showModalDetail: boolean = false;
   showModalConfirm: boolean = false;
   showModalEdit: boolean = false;
   showModalNewProduct: boolean = false;
-  producDetail: IProduct = {
+  producDetail: ProductDB = {
     ID: 0,
     NOMBRE: '',
     DESCRIPCION: '',
     CATEGORIA: '',
     PRECIO: 0,
-    ACTIVO: false,
+    ACTIVE: false,
   };
 
   constructor(private _apiProducts: ProductApiService, private cdRef: ChangeDetectorRef) {}
@@ -38,6 +39,8 @@ export class ProductsPage {
       next: (data) => {
         this.productsList = data;
 
+        console.log(data);
+
         this.cdRef.detectChanges();
       },
       error: (error) => {
@@ -46,7 +49,7 @@ export class ProductsPage {
     });
   }
 
-  openModalDetail(product: IProduct): void {
+  openModalDetail(product: ProductDB): void {
     this.showModalDetail = true;
     this.producDetail = product;
   }
@@ -58,7 +61,11 @@ export class ProductsPage {
   updateStatusProduct(id: number): void {
     this._apiProducts.updateProductStatusAPI(id).subscribe({
       next: (data) => {
-        this.getAllProducts();
+        console.log(data);
+        let dataProduct = this.getAllProducts();
+        //console.log(dataProduct);
+
+        //this.getAllProducts();
       },
       error: (error) => {
         console.log(error);
@@ -66,7 +73,7 @@ export class ProductsPage {
     });
   }
 
-  openModalEdit(product: IProduct): void {
+  openModalEdit(product: ProductDB): void {
     this.showModalEdit = true;
     this.producDetail = product;
   }
