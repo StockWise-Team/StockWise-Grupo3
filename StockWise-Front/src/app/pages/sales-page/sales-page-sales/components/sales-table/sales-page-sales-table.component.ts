@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, CurrencyPipe} from '@angular/common';
 import { Router } from '@angular/router';
-import { SalesPageSalesService } from '../../services/sales-page-sales.service';
-import { CashService } from '../../../../../shared/services/cash.service';
-import { GroupedSale } from '../../models/sales.model';
+import { SalesPageSalesService } from '@app/services';
+import { GroupedSale } from '@app/models/sales.model';
+import { CashService } from '@app/services/cash.service';
 
 @Component({
   selector: 'sales-page-sales-table',

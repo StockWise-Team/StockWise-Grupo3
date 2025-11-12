@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GroupedSale } from '../models/sales.model';
-import { Product, SaleItem } from '../models/product.model';
+import { GroupedSale } from '@app/models/sales.model';
+import { Product, SaleItem } from '@app/models/product.model';
 
 interface ProductDB {
   NOMBRE: string;
