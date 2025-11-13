@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IProduct } from '../../models/products.model';
 import { FormsModule } from '@angular/forms';
 import { ProductApiService } from '../../services/products.service';
 import { ProductDB } from '@app/models/productDB.model';
@@ -27,7 +26,7 @@ export class ModalEdit {
 
   updateProduct() {
     if (this.detailProduct != undefined) {
-      const updatedProduct: IProduct = {
+      const updatedProduct: ProductDB = {
         ID: this.detailProduct.ID,
         NOMBRE:
           this.nombre == '' || this.nombre == null

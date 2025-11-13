@@ -11,6 +11,7 @@ import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
 import { StockPage } from './pages/stock-page/stock-page';
 import { RegisterClosingsPage } from './pages/register-closings-page/register-closings-page';
 import { ProductsPage } from './pages/products-page/products-page';
+import { SalesPage } from './pages/sales-page/sales-page';
 
 export const routes: Routes = [
   { path: '', component: Login },
@@ -24,7 +25,7 @@ export const routes: Routes = [
       },
       {
         path: 'sales',
-        component: HomePage,
+        component: SalesPage,
       },
       {
         path: 'products',

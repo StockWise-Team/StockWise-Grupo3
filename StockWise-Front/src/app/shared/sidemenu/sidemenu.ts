@@ -8,7 +8,7 @@ import { Role } from '@app/enums/rolesEnum';
 
 @Component({
   selector: 'app-sidemenu',
-  imports: [CommonModule, RouterLink, RouterLinkActive, CartIcon, BoxIcon, GetInIcon],
+  imports: [CommonModule, RouterLink, RouterLinkActive, CartIcon, BoxIcon, GetInIcon, HouseIcon, TableIcon, AddUserIcon],
   templateUrl: './sidemenu.html',
   styleUrl: './sidemenu.css',
 })

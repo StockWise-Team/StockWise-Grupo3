@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { IProduct } from './models/products.model';
 import { ProductApiService } from './services/products.service';
 import { ModalDetails } from './modals/modal-details/modal-details';
 import { ModalEdit } from './modals/modal-edit/modal-edit';
@@ -28,7 +27,7 @@ export class ProductsPage {
 
   // Variables para la paginación
   currentPage: number = 1;
-  itemsPerPage: number = 9;
+  itemsPerPage: number = 10;
   totalItems: number = 0;
   totalPages: number = 0;
   // Datos a mostrar en la página actual
