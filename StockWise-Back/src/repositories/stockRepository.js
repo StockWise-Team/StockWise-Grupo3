@@ -24,11 +24,11 @@ const getAllStockRepository = async () => {
 };
 
 const createProductStockRepository = async (stockInfo) => {
-  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL } = stockInfo;
+  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL } = stockInfo.body;
   const pool = await getConnectionSQL();
   try {
     console.log(
-      `REPOSITORY - createProductStockRepository producto:${stockInfo}`
+      `REPOSITORY - createProductStockRepository producto:${ID_PRODUCTO}`
     );
 
     await pool

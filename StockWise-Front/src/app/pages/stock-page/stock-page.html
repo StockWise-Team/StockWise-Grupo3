@@ -1,7 +1,7 @@
 <div class="flex justify-between mb-3">
   <h1 class="text-2xl font-medium text-primary-800">Tabla de Stock de productos</h1>
-  <button class="border-0 py-1 px-3 rounded-md text-white bg-success-500 hover:bg-green-400">
-    Agregar Stock de Producto
+  <button (click)="openModalNewStock()" class="border-0 py-1 px-3 rounded-md text-white bg-success-500 hover:bg-green-400">
+    + Agregar Stock de Producto
   </button>
 </div>
 
@@ -13,7 +13,9 @@
 />
 } @else{
 <p>No hay lista de stock</p>
-} @if(showConfirmModal()){
+} 
+
+@if(showEditStockModal()){
 
 <div class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50">
   <div class="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4">
@@ -95,3 +97,6 @@
   </div>
 </div>
 }
+
+  <app-stock-modal [isVisible]="showModalNewStock()" (close)="recargarDatosPadreNewStock($event)" />
+
