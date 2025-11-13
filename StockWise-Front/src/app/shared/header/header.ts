@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Breadcrumbs } from '../breadcrumbs/breadcrumbs';
 import { ProfileIcon } from "@app/icons";
 
 @Component({
   selector: 'app-header',
-  imports: [Breadcrumbs, ProfileIcon],
+  imports: [ProfileIcon],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

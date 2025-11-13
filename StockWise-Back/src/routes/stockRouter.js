@@ -10,6 +10,6 @@ const stockRouter = express();
 stockRouter.get("/", getAllStock);
 stockRouter.put("/:id", updateProductStock);
 stockRouter.delete("/:id", deleteStockById)
-stockRouter.post("/:id", createProductStock)
+stockRouter.post("/", createProductStock)
 
 module.exports = stockRouter;

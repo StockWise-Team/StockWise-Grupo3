@@ -18,7 +18,7 @@ const getAllStock = async (req, res) => {
 
 const createProductStock = async (req, res) => {
   try {
-    console.log("CONTROLLER - createProductStock");
+    console.log("CONTROLLER - createProductStock", req);
 
     const stockInfo = req.body;
     const newProductStock = await createProductStockService(stockInfo);
