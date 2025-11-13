@@ -33,9 +33,9 @@ const createProductStockRepository = async (stockInfo) => {
 
     await pool
       .request()
-      .input("ID_PRODUCTO", sql.NVarChar, ID_PRODUCTO)
-      .input("CANTIDAD_DEPOSITO", sql.NVarChar, CANTIDAD_DEPOSITO)
-      .input("CANTIDAD_SUCURSAL", sql.NVarChar, CANTIDAD_SUCURSAL)
+      .input("ID_PRODUCTO", sql.Int, ID_PRODUCTO)
+      .input("CANTIDAD_DEPOSITO", sql.Int, CANTIDAD_DEPOSITO)
+      .input("CANTIDAD_SUCURSAL", sql.Int, CANTIDAD_SUCURSAL)
       .query(createProductStockSQL);
 
     return stockInfo;
@@ -52,31 +52,33 @@ const createProductStockRepository = async (stockInfo) => {
 };
 
 const updateProductStockRepository = async (id, productStock) => {
-  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL } = productStock;
+  const { ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL } = productStock.body;
+
   const pool = await getConnectionSQL();
   try {
     console.log(
       `REPOSITORY - updateProductStockRepository id: ${id}  producto:${productStock}`
     );
-
+    
     const foundProductStock = await pool
-      .request()
-      .input("id", sql.Int, id)
-      .query(updateProductStockSQL);
-
+    .request()
+    .input("idStock", sql.Int, id)
+    .query(getProductStockByIdSQL);
+    
     if (foundProductStock.recordset.length == 0) {
       console.log("Registro de stock de producto no encontrado");
     } else {
+      console.log('stock prod:', ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL)
       const updatedProductStock = await pool
         .request()
         .input("idStock", sql.Int, id)
-        .input("ID_PRODUCTO", sql.NVarChar, ID_PRODUCTO)
-        .input("CANTIDAD_DEPOSITO", sql.NVarChar, CANTIDAD_DEPOSITO)
-        .input("CANTIDAD_SUCURSAL", sql.NVarChar, CANTIDAD_SUCURSAL)
+        .input("idProducto", sql.Int, ID_PRODUCTO)
+        .input("cantidadDeposito", sql.Int, CANTIDAD_DEPOSITO)
+        .input("cantidadSucursal", sql.Int, CANTIDAD_SUCURSAL)
         .query(updateProductStockSQL);
 
       console.log(
-        `Stock de producto Actualizado - ID_PRODUCTO: ${foundProduct.recordset[0].ID_PRODUCTO}`
+        `Stock de producto Actualizado - ID_PRODUCTO: ${foundProductStock.recordset[0].ID_PRODUCTO}`
       );
 
       return updatedProductStock.rowsAffected[0];

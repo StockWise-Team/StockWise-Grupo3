@@ -28,8 +28,9 @@ const createProductStockService = async (stockInfo) => {
 const updateProductStockService = async (id, productStock) => {
     try {
       console.log(
-        `SERVICE - updateProductStockService - stock de producto actualizado: ${id} - ${product}`
+        `SERVICE - updateProductStockService - stock de producto actualizado: ${id} - ${productStock}`
       );
+      // console.log(Object.entries(productStock));
       return await updateProductStockRepository(id, productStock);
     } catch (error) {
       console.log("Error en SERVICE - updateProductService" + error);

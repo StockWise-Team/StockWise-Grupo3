@@ -11,15 +11,15 @@ import { StockService } from '@app/services/stock.service';
 export class StockTable {
   @Input() StockList: Stock[] = [];
   @Output() productStockDeleted = new EventEmitter<number>();
+  @Output() updateProductStock = new EventEmitter<Stock>();
 
   constructor(private _stockService: StockService){}
 
-  actualizarStock(id: number) {
-    console.log('actualizando stock de producto..', id);
+  actualizarStock(item: Stock) {
+    this.updateProductStock.emit(item);
   }
 
   eliminarStock(id: number) {
-    console.log('click boton front eliminar stock de producto..', id);
     this._stockService.deleteProductStock(id).subscribe({
       next: (data) => {
         console.log('response exitosa al eliminar', data)

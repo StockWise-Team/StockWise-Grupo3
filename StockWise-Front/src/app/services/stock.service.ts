@@ -26,4 +26,10 @@ export class StockService {
     console.log('Eliminando registro de stock de id:', id);
     return this.http.delete<Stock>(`${this.apiUrl}/stock/${id}`);
   }
+
+  updateProductStock(stockItem: Stock):Observable<Stock>{
+    return this.http.put<Stock>(`${this.apiUrl}/stock/${stockItem.ID}`, {
+      body: stockItem
+    });
+  }
 }
