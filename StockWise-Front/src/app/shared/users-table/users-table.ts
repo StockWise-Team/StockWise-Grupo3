@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/userService';
 
@@ -13,15 +13,18 @@ export class UsersTable implements OnInit {
   
   users: any[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.cargarUsuarios();
   }
 
   cargarUsuarios() {
-    this.userService.getAllUsers().subscribe((data) => {
-      this.users = data;
+    this.userService.getAllUsers().subscribe({
+      next: (data) => {
+        this.users = data;
+        this.cdRef.detectChanges()
+      }
     });
   }
 

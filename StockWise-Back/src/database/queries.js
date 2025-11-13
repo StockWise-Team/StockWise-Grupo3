@@ -175,7 +175,7 @@ module.exports = {
   // Actualizar registro completo de stock de un producto
   updateProductStockSQL: `
   UPDATE STOCK 
-  SET ID_PRODUCTO = @idStock, 
+  SET ID_PRODUCTO = @idProducto, 
       CANTIDAD_DEPOSITO = @cantidadDeposito, 
       CANTIDAD_SUCURSAL = @cantidadSucursal
   WHERE ID = @idStock`,
