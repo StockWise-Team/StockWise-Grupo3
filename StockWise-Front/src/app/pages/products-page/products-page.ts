@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { IProduct } from './models/products.model';
 import { ProductApiService } from './services/products.service';
 import { ModalDetails } from './modals/modal-details/modal-details';
 import { ModalEdit } from './modals/modal-edit/modal-edit';
@@ -22,8 +21,20 @@ export class ProductsPage {
   showModalConfirm: boolean = false;
   showModalEdit: boolean = false;
   showModalNewProduct: boolean = false;
+
   // Control para el input search
   searchControl = new FormControl('');
+
+  // Variables para la paginación
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+  totalPages: number = 0;
+  // Datos a mostrar en la página actual
+  paginatedItems: ProductDB[] = [];
+  // Array para generar los botones de la paginación en product-page
+  pageNumbers: number[] = [];
+
   producDetail: ProductDB = {
     ID: 0,
     NOMBRE: '',
@@ -58,6 +69,11 @@ export class ProductsPage {
       next: (data) => {
         this.productsList = data;
         this.itemsFiltrados = [...this.productsList];
+        this.totalItems = data.length;
+
+        this.calculateTotalPages();
+        this.goToPage(this.currentPage);
+
         this.cdRef.detectChanges();
       },
       error: (error) => {
@@ -101,6 +117,7 @@ export class ProductsPage {
     if (exito) {
       // Actualizacion de la tabla con los datos nuevos
       this.getAllProducts();
+      this.paginatedItems = this.productsList
     }
   }
 
@@ -138,5 +155,41 @@ export class ProductsPage {
     );
 
     console.log(this.itemsFiltrados);
+  }
+
+  // Calcula el número total de páginas y genera el array de botones
+  calculateTotalPages(): void {
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.pageNumbers = Array(this.totalPages)
+      .fill(0)
+      .map((x, i) => i + 1);
+  }
+
+  // Lógica principal para cambiar de página
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) {
+      return; // Previene ir a páginas inválidas
+    }
+    this.currentPage = page;
+    this.updatePaginatedData();
+  }
+
+  // Lógica para obtener el subconjunto de datos (slice)
+  updatePaginatedData(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+
+    // Asigna el subconjunto de MOCK_DATA al array de la vista
+    this.paginatedItems = this.productsList.slice(startIndex, endIndex);
+    console.log(this.productsList);
+  }
+
+  // Métodos de navegación (Siguiente/Anterior)
+  nextPage(): void {
+    this.goToPage(this.currentPage + 1);
+  }
+
+  prevPage(): void {
+    this.goToPage(this.currentPage - 1);
   }
 }
