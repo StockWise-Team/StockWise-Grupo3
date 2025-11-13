@@ -52,6 +52,10 @@ export class SalesPageSalesService {
     return this.http.get<GroupedSale[]>(`${this.salesApiUrl}/today`);
   }
 
+  getAllSales(): Observable<GroupedSale[]> {
+    return this.http.get<GroupedSale[]>(`${this.salesApiUrl}`);
+  }
+
   // Actualiza las ventas en el servicio
   updateSales(sales: GroupedSale[]): void {
     this.groupedSales = sales.map(sale => ({ ...sale, expanded: false }));

@@ -33,11 +33,12 @@ module.exports = {
   `,
 
   getProductByIdSQL: `SELECT * FROM Productos WHERE ID = @ID`,
-  deleteProductSQL: `UPDATE Productos SET ACTIVO = 0 WHERE ID = @ID`,
-  createProductSQL: `INSERT INTO PRODUCTOS (NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO) 
-  VALUES (@NOMBRE, @DESCRIPCION, @CATEGORIA, @PRECIO, @ACTIVO)`,
+  deleteProductSQL: `UPDATE Productos SET ACTIVE = 0 WHERE ID = @ID`,
+  activeProductSQL: `UPDATE Productos SET ACTIVE = 1 WHERE ID = @ID`,
+  createProductSQL: `INSERT INTO PRODUCTOS (NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVE) 
+  VALUES (@NOMBRE, @DESCRIPCION, @CATEGORIA, @PRECIO, @ACTIVE)`,
   updateProductSQL: `UPDATE Productos 
-  SET NOMBRE = @NOMBRE, DESCRIPCION = @DESCRIPCION, CATEGORIA = @CATEGORIA, PRECIO = @PRECIO, ACTIVO = @ACTIVO
+  SET NOMBRE = @NOMBRE, DESCRIPCION = @DESCRIPCION, CATEGORIA = @CATEGORIA, PRECIO = @PRECIO, ACTIVE = @ACTIVE
   WHERE ID = @ID`,
   // ======================================
   // Consultas para ventas
@@ -146,9 +147,16 @@ module.exports = {
   // Obtener todo los registros de stock
   getAllStock: "SELECT * FROM STOCK",
 
+  //Obtener un registro de stock por id
+  getProductStockByIdSQL: `
+  SELECT ID, ID_PRODUCTO, CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL 
+  FROM STOCK 
+  WHERE ID = @idStock
+  `,
+
   // Obtener stock actual de un producto
   getProductStockSQL: `
-    SELECT CANTIDAD_SUCURSAL, CANTIDAD_DEPOSITO 
+    SELECT CANTIDAD_DEPOSITO, CANTIDAD_SUCURSAL
     FROM STOCK 
     WHERE ID_PRODUCTO = @idProducto
   `,
@@ -165,16 +173,17 @@ module.exports = {
   VALUES (@ID_PRODUCTO, @CANTIDAD_DEPOSITO, @CANTIDAD_SUCURSAL)`,
 
   // Actualizar registro completo de stock de un producto
-  updateProductStockSQL: `UPDATE STOCK 
-  SET ID_PRODUCTO = @ID_PRODUCTO, 
-      CANTIDAD_DEPOSITO = @CANTIDAD_DEPOSITO, 
-      CANTIDAD_SUCURSAL = @CANTIDAD_SUCURSAL
+  updateProductStockSQL: `
+  UPDATE STOCK 
+  SET ID_PRODUCTO = @idProducto, 
+      CANTIDAD_DEPOSITO = @cantidadDeposito, 
+      CANTIDAD_SUCURSAL = @cantidadSucursal
   WHERE ID = @idStock`,
 
   deleteProductStockByIdSQL: `
   UPDATE STOCK 
     SET CANTIDAD_DEPOSITO = 0,
-        CANTIDAD_SUCURSAL = 0, 
+        CANTIDAD_SUCURSAL = 0
     WHERE ID = @idStock
   `,
 

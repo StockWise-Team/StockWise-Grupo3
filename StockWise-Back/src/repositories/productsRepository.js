@@ -5,6 +5,7 @@ const {
   deleteProductSQL,
   createProductSQL,
   updateProductSQL,
+  activeProductSQL,
   getProductsWithStockSQL,
 } = require("../database/queries");
 const sql = require("mssql");
@@ -14,6 +15,7 @@ exports.getAllProductsRepository = async () => {
   const pool = await getConnectionSQL();
   try {
     const result = await pool.request().query(getAllProductSQL);
+
     return result.recordset;
   } catch (error) {
     console.log("Error en REPOSITORY - getAllProductsRepository - " + error);
@@ -30,8 +32,12 @@ exports.getProductsWithStockRepository = async () => {
     const result = await pool.request().query(getProductsWithStockSQL);
     return result.recordset;
   } catch (error) {
-    console.log("Error en REPOSITORY - getProductsWithStockRepository - " + error);
-    throw Error("Error en REPOSITORY - getProductsWithStockRepository - " + error);
+    console.log(
+      "Error en REPOSITORY - getProductsWithStockRepository - " + error
+    );
+    throw Error(
+      "Error en REPOSITORY - getProductsWithStockRepository - " + error
+    );
   } finally {
     pool.close();
   }
@@ -57,6 +63,7 @@ exports.getProductByIdRepository = async (id) => {
 
 exports.deleteProductRepository = async (id) => {
   const pool = await getConnectionSQL();
+  let result;
 
   try {
     console.log(`REPOSITORY - deleteProductRepository - id:${id}`);
@@ -68,17 +75,24 @@ exports.deleteProductRepository = async (id) => {
     if (foundProduct.recordset.length == 0) {
       console.log("Producto no encontrado");
     } else {
-      console.log(foundProduct.recordset[0]);
-      const deletedProduct = await pool
-        .request()
-        .input("id", sql.Int, id)
-        .query(deleteProductSQL);
+      if (foundProduct.recordset[0].ACTIVE) {
+        result = await pool
+          .request()
+          .input("id", sql.Int, id)
+          .query(deleteProductSQL);
+      }
+      if (!foundProduct.recordset[0].ACTIVE) {
+        result = await pool
+          .request()
+          .input("id", sql.Int, id)
+          .query(activeProductSQL);
+      }
 
       console.log(
         `Producto Eliminado - NOMBRE: ${foundProduct.recordset[0].NOMBRE}`
       );
 
-      return deletedProduct.rowsAffected[0];
+      return result.rowsAffected[0];
     }
   } catch (error) {
     console.log("Error en REPOSITORY - deleteProductRepository - " + error);
@@ -89,7 +103,7 @@ exports.deleteProductRepository = async (id) => {
 };
 
 exports.createProductRepository = async (product) => {
-  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO } = product;
+  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVE } = product;
   const pool = await getConnectionSQL();
   try {
     console.log(`REPOSITORY - createProductRepository producto:${product}`);
@@ -100,7 +114,7 @@ exports.createProductRepository = async (product) => {
       .input("DESCRIPCION", sql.NVarChar, DESCRIPCION)
       .input("CATEGORIA", sql.NVarChar, CATEGORIA)
       .input("PRECIO", sql.Decimal, PRECIO)
-      .input("ACTIVO", sql.Bit, ACTIVO)
+      .input("ACTIVE", sql.Bit, ACTIVE)
       .query(createProductSQL);
 
     return product;
@@ -113,7 +127,7 @@ exports.createProductRepository = async (product) => {
 };
 
 exports.updateProductRepository = async (id, product) => {
-  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVO } = product;
+  const { NOMBRE, DESCRIPCION, CATEGORIA, PRECIO, ACTIVE } = product;
   const pool = await getConnectionSQL();
   try {
     console.log(
@@ -135,14 +149,14 @@ exports.updateProductRepository = async (id, product) => {
         .input("DESCRIPCION", sql.NVarChar, DESCRIPCION)
         .input("CATEGORIA", sql.NVarChar, CATEGORIA)
         .input("PRECIO", sql.Decimal, PRECIO)
-        .input("ACTIVO", sql.Bit, ACTIVO)
+        .input("ACTIVE", sql.Bit, ACTIVE)
         .query(updateProductSQL);
 
       console.log(
         `Producto Actualizado - NOMBRE: ${foundProduct.recordset[0].NOMBRE}`
       );
       console.log(product);
-      
+
       return updatedProduct.rowsAffected[0];
     }
   } catch (error) {

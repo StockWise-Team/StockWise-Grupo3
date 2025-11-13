@@ -23,9 +23,7 @@ Tipo	Tecnología
 - Frontend: Angular
 - Backend:	Node.js con Express
 - Base de datos:	SQL Server
-- Autenticación:	JWT / OAuth2 (opcional)
-- Despliegue:	AWS
-
+- Estilos: Tailwindcss
 ## ⚙️ Instalación y configuración
 
 Clonar el repositorio
@@ -44,14 +42,17 @@ cd StockWiseFront <br>
 
 
 ### Configurar variables de entorno
-Crea un archivo .env con tus credenciales:
+Crea un archivo .env con las siguientes credenciales a la altura de src de StockWise-Back (ver el archivo .env.ejemplo):
 ```
-USER_DB = 
-PASSWORD_DB = 
-SERVER_NAME = 
-NAME_DB = 
-PORT_DB =
+USER_DB_LOCAL = 
+PASSWORD_DB_LOCAL = 
+SERVER_NAME_LOCAL = 
+NAME_DB_LOCAL = 
+PORT_DB_LOCAL =
 ```
+
+### Agregar tablas con datos a la base
+Ejecutar como consulta en SQL Server Managment Studio el contenido del archivo de la carpeta database/ seeding.sql
 
 
 ## ▶️ Ejecutar el proyecto
@@ -60,12 +61,10 @@ PORT_DB =
 
 
 Acceder a la app Front
-👉 http://localhost:3000
+👉 http://localhost:4200
+
 Acceder a la app Back
 👉 http://localhost:3000
-Acceder a la app DB
-👉 http://localhost:3001
-
 
 #🧑‍💼 Roles y permisos
 ### Administrador	
