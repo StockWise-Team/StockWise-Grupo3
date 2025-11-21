@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const userRepository = require('../repositories/userRepository');
 
 const createUser = async ({ nombre_completo, mail, contraseña, rol }) => {
-
+ try {
   if (!nombre_completo || !mail || !contraseña || !rol) {
     const error = new Error('Faltan campos obligatorios');
     error.status = 400;
@@ -12,7 +12,7 @@ const createUser = async ({ nombre_completo, mail, contraseña, rol }) => {
   const salt = await bcrypt.genSalt(10);
   const hashed = await bcrypt.hash(contraseña, salt);
 
-  try {
+ 
     return await userRepository.insertUser({
       nombre_completo,
       mail,
@@ -30,13 +30,14 @@ const createUser = async ({ nombre_completo, mail, contraseña, rol }) => {
 };
 
 const updateUser = async (id, { nombre_completo, mail, rol }) => {
+ try { 
   if (!nombre_completo || !mail || !rol) {
     const error = new Error('Faltan campos obligatorios');
     error.status = 400;
     throw error;
   }
 
-  try {
+
     const result = await userRepository.updateUser(id, { nombre_completo, mail, rol });
 
     if (result.rowsAffected[0] === 0) {
@@ -56,13 +57,14 @@ const updateUser = async (id, { nombre_completo, mail, rol }) => {
 };
 
 const deleteUser = async (id) => {
+  try {
   if (!id) {
     const error = new Error('ID requerido');
     error.status = 400;
     throw error;
   }
 
-  try {
+
     const result = await userRepository.deleteUser(id);
 
     if (result.rowsAffected[0] === 0) {
@@ -93,6 +95,7 @@ const getUserById = async (id) => {
 };
 
 const changePassword = async (id, { oldPassword, newPassword }) => {
+ try {
   if (!oldPassword || !newPassword) {
     const error = new Error('Contraseña antigua y nueva requeridas');
     error.status = 400;
@@ -120,10 +123,17 @@ const changePassword = async (id, { oldPassword, newPassword }) => {
   const hashed = await bcrypt.hash(newPassword, salt);
 
   return await userRepository.updatePassword(id, hashed);
+    } catch (error) {
+    throw error;
+  }
 };
 
 const getAllUsers = async () => {
-  return await userRepository.getAllUsers();
+  try {
+    return await userRepository.getAllUsers();
+  } catch (error) {
+    throw error;
+  }
 };
 
 module.exports = {
