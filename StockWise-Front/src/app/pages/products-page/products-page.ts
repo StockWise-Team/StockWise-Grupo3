@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ProductApiService } from './services/products.service';
+import { ProductApiService } from '../../services/products.service';
 import { ModalDetails } from './modals/modal-details/modal-details';
 import { ModalEdit } from './modals/modal-edit/modal-edit';
 import { CommonModule } from '@angular/common';

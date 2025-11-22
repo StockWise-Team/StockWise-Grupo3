@@ -18,8 +18,8 @@ exports.authUserRepository = async (email, contra) => {
     }
 
     const user = result.recordset[0];
-    const isMatch = contra === user.CONTRASEÑA  //await bcrypt.compare(contra, user.CONTRASEÑA); TODO: revisar implementacion de library bcryptjs
-    console.log(isMatch, contra, user.CONTRASEÑA)
+    const isMatch = await bcrypt.compare(contra, user.CONTRASEÑA);
+    console.log(isMatch, contra, user.CONTRASEÑA);
 
     if (!isMatch) {
       return null;

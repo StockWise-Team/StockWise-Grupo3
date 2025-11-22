@@ -1,17 +1,25 @@
-const { getConnectionSQL } = require('../database/connection');
-const queries = require('../database/queries');
-const sql = require('mssql');
+const { getConnectionSQL } = require("../database/connection");
+const queries = require("../database/queries");
+const sql = require("mssql");
 
 const insertUser = async ({ nombre_completo, mail, hashedPassword, rol }) => {
   const pool = await getConnectionSQL();
   try {
-  return pool.request()
-    .input('nombre_completo', sql.VarChar, nombre_completo)
-    .input('mail', sql.VarChar, mail)
-    .input('contraseña', sql.VarChar, hashedPassword)
-    .input('rol', sql.VarChar, rol)
-    .query(queries.createNewUserSQL);
+    console.log(
+      `REPOSITORY - insertUser usuario:${nombre_completo}, ${mail}, ${hashedPassword}, ${rol}`
+    );
+    const newUser = await pool
+      .request()
+      .input("nombre_completo", sql.VarChar, nombre_completo)
+      .input("mail", sql.VarChar, mail)
+      .input("contraseña", sql.VarChar, hashedPassword)
+      .input("rol", sql.VarChar, rol)
+      .query(queries.createNewUserSQL);
+
+    return newUser;
   } catch (error) {
+    console.log("Error en Repositorio" + error);
+
     throw error;
   } finally {
     pool.close();
@@ -20,13 +28,16 @@ const insertUser = async ({ nombre_completo, mail, hashedPassword, rol }) => {
 
 const updateUser = async (id, { nombre_completo, mail, rol }) => {
   const pool = await getConnectionSQL();
- try {
-  return pool.request()
-    .input('id', sql.Int, id)
-    .input('nombre_completo', sql.VarChar, nombre_completo)
-    .input('mail', sql.VarChar, mail)
-    .input('rol', sql.VarChar, rol)
-    .query(queries.updateUserSQL);
+  try {
+    const newPass = await pool
+      .request()
+      .input("id", sql.Int, id)
+      .input("nombre_completo", sql.VarChar, nombre_completo)
+      .input("mail", sql.VarChar, mail)
+      .input("rol", sql.VarChar, rol)
+      .query(queries.updateUserSQL);
+
+    return newPass;
   } catch (error) {
     throw error;
   } finally {
@@ -37,9 +48,10 @@ const updateUser = async (id, { nombre_completo, mail, rol }) => {
 const deleteUser = async (id) => {
   const pool = await getConnectionSQL();
   try {
-  return pool.request()
-    .input('id', sql.Int, id)
-    .query(queries.deleteUserSQL);
+    return await pool
+      .request()
+      .input("id", sql.Int, id)
+      .query(queries.deleteUserSQL);
   } catch (error) {
     throw error;
   } finally {
@@ -49,17 +61,16 @@ const deleteUser = async (id) => {
 
 const getUserById = async (id) => {
   const pool = await getConnectionSQL();
-  return pool.request()
-    .input('id', sql.Int, id)
-    .query(queries.getUserByIdSQL);
+  return await pool.request().input("id", sql.Int, id).query(queries.getUserByIdSQL);
 };
 
 const getPasswordHash = async (id) => {
   const pool = await getConnectionSQL();
   try {
-  return pool.request()
-    .input('id', sql.Int, id)
-    .query(queries.getPasswordHashSQL);
+    return await pool
+      .request()
+      .input("id", sql.Int, id)
+      .query(queries.getPasswordHashSQL);
   } catch (error) {
     throw error;
   } finally {
@@ -70,10 +81,11 @@ const getPasswordHash = async (id) => {
 const updatePassword = async (id, hashedPassword) => {
   const pool = await getConnectionSQL();
   try {
-  return pool.request()
-    .input('id', sql.Int, id)
-    .input('newPass', sql.VarChar, hashedPassword)
-    .query(queries.changePasswordSQL);
+    return await pool
+      .request()
+      .input("id", sql.Int, id)
+      .input("newPass", sql.VarChar, hashedPassword)
+      .query(queries.changePasswordSQL);
   } catch (error) {
     throw error;
   } finally {
@@ -84,7 +96,8 @@ const updatePassword = async (id, hashedPassword) => {
 const getAllUsers = async () => {
   const pool = await getConnectionSQL();
   try {
-  return pool.request().query(queries.getAllUsersSQL);
+    const result = await pool.request().query(queries.getAllUsersSQL);
+    return result.recordsets[0];
   } catch (error) {
     throw error;
   } finally {
@@ -99,5 +112,5 @@ module.exports = {
   getUserById,
   getPasswordHash,
   updatePassword,
-  getAllUsers
+  getAllUsers,
 };

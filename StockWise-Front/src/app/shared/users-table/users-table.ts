@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../services/userService';
+import { UserService } from '../../services/userService';
 
 @Component({
   selector: 'app-users-table',

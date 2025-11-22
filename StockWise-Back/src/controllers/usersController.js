@@ -1,9 +1,11 @@
-const userService = require('../services/userService');
+const userService = require("../services/userService");
 
 const createNewUser = async (req, res) => {
   try {
     const result = await userService.createUser(req.body);
-    res.status(201).json({ message: 'Usuario creado exitosamente', result });
+    console.log(result);
+
+    res.status(201).json({ message: "Usuario creado exitosamente", result });
   } catch (error) {
     res.status(error.status || 500).json({ message: error.message });
   }
@@ -12,7 +14,9 @@ const createNewUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const result = await userService.updateUser(req.params.id, req.body);
-    res.status(200).json({ message: 'Usuario actualizado exitosamente', result });
+    res
+      .status(200)
+      .json({ message: "Usuario actualizado exitosamente", result });
   } catch (error) {
     res.status(error.status || 500).json({ message: error.message });
   }
@@ -20,8 +24,8 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const result = await userService.deleteUser(req.body.id);
-    res.status(200).json({ message: 'Usuario eliminado exitosamente', result });
+    const result = await userService.deleteUser(req.params.id);
+    res.status(200).json({ message: "Usuario eliminado exitosamente", result });
   } catch (error) {
     res.status(error.status || 500).json({ message: error.message });
   }
@@ -39,7 +43,9 @@ const getUserById = async (req, res) => {
 const changePassword = async (req, res) => {
   try {
     const result = await userService.changePassword(req.params.id, req.body);
-    res.status(200).json({ message: 'Contraseña actualizada exitosamente', result });
+    res
+      .status(200)
+      .json({ message: "Contraseña actualizada exitosamente", result });
   } catch (error) {
     res.status(error.status || 500).json({ message: error.message });
   }
@@ -55,10 +61,10 @@ const getAllUsers = async (req, res) => {
 };
 
 module.exports = {
-  createNewUser,
-  updateUser,
-  deleteUser,
-  getUserById,
-  changePassword,
-  getAllUsers
+  createNewUser,
+  updateUser,
+  deleteUser,
+  getUserById,
+  changePassword,
+  getAllUsers,
 };

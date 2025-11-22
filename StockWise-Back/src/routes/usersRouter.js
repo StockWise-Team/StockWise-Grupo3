@@ -8,13 +8,13 @@ const {
   changePassword
 } = require('../controllers/usersController.js');
 
-const router = Router();
+const usersRouter = Router();
 
-router.post('/createNewUser', createNewUser);
-router.put('/updateUser/:id', updateUser);
-router.delete('/deleteUser/:id', deleteUser);
-router.get('/getUserById/:id', getUserById);
-router.post('/changePassword/:id', changePassword);
-router.get('/getAllUsers', getAllUsers);
+usersRouter.post('/createNewUser', createNewUser);
+usersRouter.put('/updateUser/:id', updateUser);
+usersRouter.delete('/deleteUser/:id', deleteUser);
+usersRouter.get('/getUserById/:id', getUserById);
+usersRouter.post('/changePassword/:id', changePassword);
+usersRouter.get('/getAllUsers', getAllUsers);
 
-module.exports = router;
+module.exports = usersRouter;

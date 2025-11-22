@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct } from '../../models/products.model';
 import { FormsModule } from '@angular/forms';
-import { ProductApiService } from '../../services/products.service';
+import { ProductApiService } from '../../../../services/products.service';
 
 @Component({
   selector: 'app-modal-new-product',
