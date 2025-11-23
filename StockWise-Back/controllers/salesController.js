@@ -1,5 +1,5 @@
 const { createSaleService, getAllSalesService, getTodaySalesService } = require("../services/salesServices");
-const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
+const { CONTENT_TYPE, TYPE_JSON } = require("../src/const").constantes;
 
 // Crea una nueva venta con los productos recibidos
 exports.createSale = async function(req, res) {

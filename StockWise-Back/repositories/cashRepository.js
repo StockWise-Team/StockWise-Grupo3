@@ -1,10 +1,10 @@
 const { getConnectionSQL } = require("../database/connection");
-const { 
-  openCashSQL, 
-  getOpenCashSQL, 
-  getTotalSalesOpenCashSQL, 
-  closeCashSQL, 
-  getCashHistorySQL 
+const {
+  openCashSQL,
+  getOpenCashSQL,
+  getTotalSalesOpenCashSQL,
+  closeCashSQL,
+  getCashHistorySQL,
 } = require("../database/queries");
 const sql = require("mssql");
 
@@ -13,16 +13,17 @@ exports.openCashRepository = async (idEmpleado) => {
   const pool = await getConnectionSQL();
   try {
     const fechaApertura = new Date();
-    
-    const result = await pool.request()
-      .input('idEmpleado', sql.Int, idEmpleado)
-      .input('fechaApertura', sql.DateTime, fechaApertura)
+
+    await pool
+      .request()
+      .input("idEmpleado", sql.Int, idEmpleado)
+      .input("fechaApertura", sql.DateTime, fechaApertura)
       .query(openCashSQL);
 
-    return { 
-      success: true, 
-      message: 'Caja abierta exitosamente',
-      fechaApertura: fechaApertura
+    return {
+      success: true,
+      message: "Caja abierta exitosamente",
+      fechaApertura: fechaApertura,
     };
   } catch (error) {
     console.log("Error en REPOSITORY - openCashRepository - " + error);
@@ -53,8 +54,12 @@ exports.getTotalSalesOpenCashRepository = async () => {
     const result = await pool.request().query(getTotalSalesOpenCashSQL);
     return result.recordset[0] || { TOTAL_VENTAS: 0, CANTIDAD_VENTAS: 0 };
   } catch (error) {
-    console.log("Error en REPOSITORY - getTotalSalesOpenCashRepository - " + error);
-    throw Error("Error en REPOSITORY - getTotalSalesOpenCashRepository - " + error);
+    console.log(
+      "Error en REPOSITORY - getTotalSalesOpenCashRepository - " + error
+    );
+    throw Error(
+      "Error en REPOSITORY - getTotalSalesOpenCashRepository - " + error
+    );
   } finally {
     pool.close();
   }
@@ -65,19 +70,20 @@ exports.closeCashRepository = async (idCaja, montoFinal, idEmpleado) => {
   const pool = await getConnectionSQL();
   try {
     const fechaCierre = new Date();
-    
-    const result = await pool.request()
-      .input('idCaja', sql.Int, idCaja)
-      .input('fechaCierre', sql.DateTime, fechaCierre)
-      .input('montoFinal', sql.Decimal(10, 2), montoFinal)
-      .input('idEmpleado', sql.Int, idEmpleado)
+
+    await pool
+      .request()
+      .input("idCaja", sql.Int, idCaja)
+      .input("fechaCierre", sql.DateTime, fechaCierre)
+      .input("montoFinal", sql.Decimal(10, 2), montoFinal)
+      .input("idEmpleado", sql.Int, idEmpleado)
       .query(closeCashSQL);
 
-    return { 
-      success: true, 
-      message: 'Caja cerrada exitosamente',
+    return {
+      success: true,
+      message: "Caja cerrada exitosamente",
       fechaCierre: fechaCierre,
-      montoFinal: montoFinal
+      montoFinal: montoFinal,
     };
   } catch (error) {
     console.log("Error en REPOSITORY - closeCashRepository - " + error);
