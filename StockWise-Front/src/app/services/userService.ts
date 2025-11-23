@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { changePasswordObj, newUser, User, UserApiResponse } from '@app/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,18 +11,20 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUsers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getAllUsers`);
+
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/getAllUsers`);
   }
-  createNewUser(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/createNewUser`, userData);
+  createNewUser(userData: newUser): Observable<UserApiResponse> {
+    return this.http.post<UserApiResponse>(`${this.apiUrl}/createNewUser`, userData);
   }
 
-  deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/deleteUser/${id}`);
+  deleteUser(id: number): Observable<UserApiResponse> {
+    return this.http.delete<UserApiResponse>(`${this.apiUrl}/deleteUser/${id}`);
   }
 
-  changePassword(id: number, passwords: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/changePassword/${id}`, passwords);
+  changePassword(id: number, passwords: changePasswordObj): Observable<UserApiResponse> {
+    return this.http.post<UserApiResponse>(`${this.apiUrl}/changePassword/${id}`, passwords);
   }
 }
