@@ -52,8 +52,10 @@ PORT_DB_LOCAL =
 ```
 
 ### Agregar tablas con datos a la base
-Ejecutar como consulta en SQL Server Managment Studio el contenido del archivo de la carpeta database/ seeding.sql
+Ejecutar como consulta en SQL Server Managment Studio el contenido del archivo de la carpeta database -> `seeding.sql`
 
+### Usuarios ejemplo 
+![alt text](image.png)
 
 ## ▶️ Ejecutar el proyecto
 
