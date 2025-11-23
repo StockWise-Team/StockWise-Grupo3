@@ -52,10 +52,11 @@ PORT_DB_LOCAL =
 ```
 
 ### Agregar tablas con datos a la base
-Ejecutar como consulta en SQL Server Managment Studio el contenido del archivo de la carpeta database -> `seeding.sql`
+Ejecutar como consulta en SQL Server Managment Studio el contenido del archivo de la carpeta database -> `create_tables.sql`
 
 ### Usuarios ejemplo 
-![alt text](image.png)
+La contraseña de todos los usuarios es nuevo123
+![alt text](image-2.png)
 
 ## ▶️ Ejecutar el proyecto
 

@@ -8,3 +8,5 @@ export * from "./get-in-icon/get-in-icon";
 export * from "./house-icon/house-icon";
 export * from "./profile-icon/profile-icon"
 export * from "./table-icon/table-icon"
+export * from "./gear-icon/gear-icon"
+export * from "./moneybag-icon/moneybag-icon"
