@@ -13,7 +13,6 @@ const configDB = {
     encrypt: false,
     trustServerCertificate: true,
     trustedConnection: true,  
-    encrypt: false, // Para desarrollo local
     enableArithAbort: true,
   },
   connectionTimeout: 30000,
