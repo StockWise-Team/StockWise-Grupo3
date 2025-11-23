@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { IProduct } from '../../models/products.model';
 import { FormsModule } from '@angular/forms';
 import { ProductApiService } from '../../../../services/products.service';
+import { ProductDB } from '@app/models/productDB.model';
 
 @Component({
   selector: 'app-modal-new-product',
@@ -15,7 +15,7 @@ export class ModalNewProduct {
   @Input() isVisible: boolean = true;
   // Output para notificar al componente padre que se debe cerrar
   @Output() close = new EventEmitter<boolean>();
-  @Input() detailProduct: IProduct | undefined;
+  @Input() detailProduct: ProductDB | undefined;
 
   nombre: string = '';
   categoria: string = '';

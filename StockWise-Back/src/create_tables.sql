@@ -65,7 +65,7 @@ CREATE TABLE VENTAS (
 GO
 
 -- INSERTS DE EJEMPLO PARA LA TABLA USUARIOS
-
+-- contraseña para todos los usuarios: "nuevo123" (hashed usando bcrypt)
 INSERT INTO USUARIOS (NOMBRE_COMPLETO, MAIL, CONTRASEÑA, ROL) VALUES ('Facundo', 'facundo@gmail.com', '$2b$10$pI/dOR6c/kEa/hYJqf5W9utr3ud3qRMEzjCTHuCfa0Wi9HqpvwOXS', 'ADMIN');
 INSERT INTO USUARIOS (NOMBRE_COMPLETO, MAIL, CONTRASEÑA, ROL) VALUES ('Cristian', 'cristian@gmail.com', '$2b$10$pI/dOR6c/kEa/hYJqf5W9utr3ud3qRMEzjCTHuCfa0Wi9HqpvwOXS', 'ADMIN');
 INSERT INTO USUARIOS (NOMBRE_COMPLETO, MAIL, CONTRASEÑA, ROL) VALUES ('Gustavo', 'gustavo@gmail.com', '$2b$10$pI/dOR6c/kEa/hYJqf5W9utr3ud3qRMEzjCTHuCfa0Wi9HqpvwOXS', 'ADMIN');
