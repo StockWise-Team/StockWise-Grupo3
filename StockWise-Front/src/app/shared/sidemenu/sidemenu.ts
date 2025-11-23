@@ -1,6 +1,6 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { BoxIcon, CartIcon, HouseIcon, TableIcon, CrossIcon, AddUserIcon, GetInIcon } from '../../icons';
+import { BoxIcon, CartIcon, HouseIcon, TableIcon, CrossIcon, AddUserIcon, GetInIcon, MoneybagIcon } from '../../icons';
 import { CommonModule } from '@angular/common';
 import { CashService } from '../../services/cash.service';
 import { CashStatus } from '@app/models/cash.model';
@@ -8,7 +8,7 @@ import { Role } from '@app/enums/rolesEnum';
 
 @Component({
   selector: 'app-sidemenu',
-  imports: [CommonModule, RouterLink, RouterLinkActive, CartIcon, BoxIcon, GetInIcon, HouseIcon, TableIcon, AddUserIcon],
+  imports: [CommonModule, RouterLink, RouterLinkActive, CartIcon, BoxIcon, HouseIcon, TableIcon, AddUserIcon, MoneybagIcon],
   templateUrl: './sidemenu.html',
   styleUrl: './sidemenu.css',
 })

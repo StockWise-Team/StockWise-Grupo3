@@ -1,47 +1,37 @@
 import { Routes } from '@angular/router';
-import { SalesPageLayoutComponent } from './pages/sales-page/sales-page-layout/components/layout/sales-page-layout.component';
-import { SalesPageSalesTableComponent } from './pages/sales-page/sales-page-sales/components/sales-table/sales-page-sales-table.component';
-import { SalesPageSaleFormComponent } from './pages/sales-page/sales-page-sales/components/sale-form/sales-page-sale-form.component';
-import { SalesPageProductsTableComponent } from './pages/sales-page/sales-page-products/components/products-table/sales-page-products-table.component';
 import { Login } from './auth/login/login';
-import { HomePage } from './pages/home-page/home-page';
-import { UsersTable } from './shared/users-table/users-table';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { EmployeeLayout } from './layouts/employee-layout/employee-layout';
-import { StockPage } from './pages/stock-page/stock-page';
-import { RegisterClosingsPage } from './pages/register-closings-page/register-closings-page';
-import { ProductsPage } from './pages/products-page/products-page';
-import { SalesPage } from './pages/sales-page/sales-page';
 
 export const routes: Routes = [
-  { path: '', component: Login },
+  { path: 'login', component: Login },
   {
     path: 'admin',
     component: AdminLayout,
     children: [
       {
         path: 'home',
-        component: HomePage,
+        loadComponent: () => import('./pages/home-page/home-page').then(m => m.HomePage),
       },
       {
         path: 'sales',
-        component: SalesPage,
+        loadComponent: () => import('./pages/sales-page/sales-page').then(m => m.SalesPage),
       },
       {
         path: 'products',
-        component: ProductsPage,
+        loadComponent: () => import('./pages/products-page/products-page').then(m => m.ProductsPage),
       },
       {
         path: 'stock',
-        component: StockPage,
+        loadComponent: () => import('./pages/stock-page/stock-page').then(m => m.StockPage),
       },
       {
         path: 'users',
-        component: UsersTable,
+        loadComponent: () => import('./pages/users-page/users-table').then(m => m.UsersTable),
       },
       {
         path: 'cash-register',
-        component: RegisterClosingsPage,
+        loadComponent: () => import('./pages/register-closings-page/register-closings-page').then(m => m.RegisterClosingsPage),
       },
     ],
   },
@@ -49,27 +39,23 @@ export const routes: Routes = [
     path: 'employee',
     component: EmployeeLayout,
     children: [
-      {
+     {
         path: 'home',
-        component: HomePage,
+        loadComponent: () => import('./pages/home-page/home-page').then(m => m.HomePage),
       },
       { 
         path: 'sales', 
-        component: SalesPageSalesTableComponent 
+        loadComponent: () => import('./pages/sales-page/sales-page-sales/components/sales-table/sales-page-sales-table.component').then(m => m.SalesPageSalesTableComponent),
       },
       { 
         path: 'sales/new', 
-        component: SalesPageSaleFormComponent 
+        loadComponent: () => import('./pages/sales-page/sales-page-sales/components/sale-form/sales-page-sale-form.component').then(m => m.SalesPageSaleFormComponent),
       },
       { 
         path: 'products', 
-        component: SalesPageProductsTableComponent
+        loadComponent: () => import('./pages/sales-page/sales-page-products/components/products-table/sales-page-products-table.component').then(m => m.SalesPageProductsTableComponent),
       },
     ],
   },
-  // {
-  //   path: 'sales-page',
-  //   component: SalesPageLayoutComponent,
-  //   children: [{ path: '', redirectTo: 'sales', pathMatch: 'full' }],
-  // },
+  {path: '**', redirectTo: 'login'}
 ];
