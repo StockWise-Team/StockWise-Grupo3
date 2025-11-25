@@ -4,7 +4,7 @@ const {
   updateProductStockService,
   deleteStockByIdService,
 } = require("../services/stockService");
-const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
+const { CONTENT_TYPE, TYPE_JSON } = require("../src/const").constantes;
 
 const getAllStock = async (req, res) => {
   try {

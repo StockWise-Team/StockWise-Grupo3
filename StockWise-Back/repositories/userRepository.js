@@ -61,7 +61,16 @@ const deleteUser = async (id) => {
 
 const getUserById = async (id) => {
   const pool = await getConnectionSQL();
-  return await pool.request().input("id", sql.Int, id).query(queries.getUserByIdSQL);
+  try {
+    return await pool
+      .request()
+      .input("id", sql.Int, id)
+      .query(queries.getUserByIdSQL);
+  } catch (error) {
+    throw error;
+  } finally {
+    pool.close();
+  }
 };
 
 const getPasswordHash = async (id) => {

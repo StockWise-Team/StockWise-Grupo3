@@ -6,7 +6,7 @@ const {
   updateProductService,
   getProductsWithStockService,
 } = require("../services/productsServices");
-const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
+const { CONTENT_TYPE, TYPE_JSON } = require("../src/const").constantes;
 
 // Obtener productos - si withStock=true, solo muestra productos con stock en sucursal
 exports.readProducts = async (req, res) => {

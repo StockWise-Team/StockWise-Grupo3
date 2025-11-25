@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ModalNewProduct } from './modals/modal-new-product/modal-new-product';
 import { ProductDB } from '@app/models/productDB.model';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-products-page',

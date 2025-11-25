@@ -4,7 +4,7 @@ const {
   closeCashService, 
   getCashHistoryService 
 } = require("../services/cashService");
-const { CONTENT_TYPE, TYPE_JSON } = require("../config/const").constantes;
+const { CONTENT_TYPE, TYPE_JSON } = require("../src/const").constantes;
 
 exports.openCash = async (req, res) => {
   try {
